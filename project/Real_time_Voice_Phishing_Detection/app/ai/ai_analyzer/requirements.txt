@@ -1,0 +1,13 @@
+# 환경 충돌 방지를 위해 순서대로 설치
+numpy>=2.0
+onnx==1.15.0
+protobuf<6.0dev,>=5.26.1
+onnx2tf
+tensorflow
+torch
+transformers
+scikit-learn
+konlpy
+openai
+ffmpeg-python
+openai-whisper

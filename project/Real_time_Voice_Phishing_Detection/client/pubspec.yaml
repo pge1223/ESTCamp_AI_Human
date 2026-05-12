@@ -1,0 +1,42 @@
+name: client
+description: "보이스피싱 탐지 앱"
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.11.5
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+  google_fonts: ^6.2.1
+  shared_preferences: ^2.2.2
+  permission_handler: ^11.0.0
+  http: ^1.2.0
+  # 오디오 재생 (전화 시뮬레이션)
+  just_audio: ^0.9.40
+  # 파일 경로
+  path_provider: ^2.1.4
+  # 온디바이스 TFLite 추론 (KoELECTRA)
+  tflite_flutter: ^0.12.1
+  # 실시간 STT (Android SpeechRecognizer)
+  speech_to_text: ^7.0.0
+  # 실시간 마이크 PCM 캡처 → 플랫폼 채널(PcmCapturePlugin.kt)로 대체됨
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/audio/
+    - assets/vocab.txt
+    # float16은 에뮬레이터 미지원, 실기기 테스트 시 int8만 포함
+    - assets/model_int8_no_erf.tflite
+    # 딥보이스 탐지 모델 (RawNet2, 입력: [1,64600,1] float32 @ 16kHz)
+    - assets/korean_model.tflite

@@ -1,0 +1,35 @@
+services:
+  tflite-convert:
+    image: ghcr.io/pinto0309/onnx2tf:latest
+    container_name: tflite-convert
+    volumes:
+      - ./models/onnx:/app/input:ro
+      - ./models/tflite:/app/output
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: >
+      sh -c "onnx2tf -i /app/input/model.onnx -o /app/output -ofs &&
+             echo '변환 완료' &&
+             ls -lh /app/output/*.tflite"
+
+  tflite-int8:
+    build: .
+    container_name: tflite-int8
+    volumes:
+      - ./models/onnx:/app/input:ro
+      - ./models/tflite:/app/output
+      - ./convert_int8_docker.py:/app/convert_int8.py:ro
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: python /app/convert_int8.py
+
+  tflite-test:
+    image: ghcr.io/pinto0309/onnx2tf:latest
+    container_name: tflite-test
+    volumes:
+      - ./:/app
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: >
+      sh -c "pip install transformers --break-system-packages -q &&
+             python /app/test_scripts/test_tflite.py"

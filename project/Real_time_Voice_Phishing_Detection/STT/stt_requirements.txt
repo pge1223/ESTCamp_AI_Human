@@ -1,0 +1,6 @@
+uv 가상환경 사용
+
+python            3.11.15
+numpy             2.4.4
+pyaudio           0.2.14
+faster-whisper    1.2.1
