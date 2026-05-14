@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>v5 모델 혼동행렬</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;600;700;900&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #0f1117;
+    color: #e8eaf0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .slide {
+    width: 1280px;
+    min-height: 720px;
+    background: linear-gradient(135deg, #13151f 0%, #1a1d2e 100%);
+    border: 1px solid #2a2d3e;
+    border-radius: 12px;
+    padding: 44px 56px;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: 28px;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+  }
+
+  /* Header */
+  .header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    border-bottom: 1px solid #2a2d3e;
+    padding-bottom: 20px;
+  }
+  .label-chip {
+    display: inline-block;
+    background: #1e3a5f;
+    color: #5b9bd5;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+  }
+  h1 { font-size: 26px; font-weight: 700; color: #fff; }
+  h1 span { color: #4eca8b; }
+  .subtitle { font-size: 13px; color: #7a7f9a; margin-top: 5px; }
+  .meta-box { text-align: right; font-size: 12px; color: #6a6f8a; line-height: 1.8; }
+  .meta-box strong { color: #9ba4c0; }
+
+  /* Body */
+  .body { display: grid; grid-template-columns: 380px 1fr; gap: 24px; }
+
+  /* Confusion Matrix */
+  .cm-wrap { display: flex; flex-direction: column; gap: 16px; }
+  .cm-title {
+    font-size: 11px; font-weight: 600; letter-spacing: 1px;
+    text-transform: uppercase; color: #6a6f8a;
+  }
+  .cm-grid {
+    display: grid;
+    grid-template-columns: 80px 1fr 1fr;
+    grid-template-rows: 32px 1fr 1fr;
+    gap: 4px;
+  }
+  .cm-axis {
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 600; color: #6a6f8a; letter-spacing: 0.5px;
+  }
+  .cm-axis.col { font-size: 10px; }
+  .cm-cell {
+    border-radius: 8px;
+    padding: 18px 12px;
+    text-align: center;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 4px;
+  }
+  .cm-cell .val { font-size: 36px; font-weight: 900; line-height: 1; }
+  .cm-cell .tag { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+  .cm-cell .desc { font-size: 10px; color: #7a7f9a; margin-top: 2px; }
+
+  .cell-tp { background: #142a1e; border: 1px solid #2a4a30; }
+  .cell-tp .val { color: #4eca8b; }
+  .cell-tp .tag { color: #4eca8b; }
+
+  .cell-tn { background: #142a1e; border: 1px solid #2a4a30; }
+  .cell-tn .val { color: #4eca8b; }
+  .cell-tn .tag { color: #4eca8b; }
+
+  .cell-fn { background: #2a1a1a; border: 1px solid #4a2a2a; }
+  .cell-fn .val { color: #f0a05a; }
+  .cell-fn .tag { color: #f0a05a; }
+
+  .cell-fp { background: #2a1a1a; border: 1px solid #4a2a2a; }
+  .cell-fp .val { color: #ef6c6c; }
+  .cell-fp .tag { color: #ef6c6c; }
+
+  /* Key metrics row */
+  .key-metrics {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+  }
+  .km-cell {
+    background: #13151f;
+    border: 1px solid #2a2d3e;
+    border-radius: 8px;
+    padding: 10px 12px;
+    text-align: center;
+  }
+  .km-label { font-size: 10px; font-weight: 600; letter-spacing: 0.8px; color: #6a6f8a; text-transform: uppercase; margin-bottom: 4px; }
+  .km-val { font-size: 20px; font-weight: 900; color: #4eca8b; }
+
+  /* Right: Analysis */
+  .analysis { display: flex; flex-direction: column; gap: 12px; }
+  .an-card {
+    background: #1c1f30;
+    border: 1px solid #2a2d3e;
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .an-header {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 8px;
+  }
+  .an-badge {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.8px;
+    padding: 3px 8px; border-radius: 4px;
+  }
+  .badge-green { background: #1a3a1a; color: #4eca8b; border: 1px solid #2a5a2a; }
+  .badge-orange { background: #3a2a10; color: #f0a05a; border: 1px solid #5a3a10; }
+  .badge-red   { background: #3a1a1a; color: #ef6c6c; border: 1px solid #5a2a2a; }
+  .an-title { font-size: 13px; font-weight: 700; color: #c8cad8; }
+  .an-body { font-size: 12px; color: #9ba4c0; line-height: 1.7; }
+  .an-body strong { color: #c8cad8; }
+  .an-example {
+    margin-top: 8px;
+    background: #13151f;
+    border-left: 3px solid #f0a05a;
+    border-radius: 0 6px 6px 0;
+    padding: 8px 10px;
+    font-size: 11px;
+    color: #9ba4c0;
+    line-height: 1.7;
+  }
+  .an-example.fp-ex { border-left-color: #ef6c6c; }
+  .an-note {
+    margin-top: 8px;
+    background: #1a1e35;
+    border: 1px solid #2a3060;
+    border-radius: 6px;
+    padding: 7px 10px;
+    font-size: 11px;
+    color: #7a8fc0;
+    line-height: 1.6;
+  }
+  .highlight { color: #5b9bd5; font-weight: 600; }
+
+  /* Footer */
+  .footer {
+    border-top: 1px solid #2a2d3e;
+    padding-top: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .takeaway { display: flex; gap: 24px; }
+  .tk-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #9ba4c0; }
+  .tk-dot { width: 6px; height: 6px; border-radius: 50%; background: #4eca8b; flex-shrink: 0; }
+  .page-info { font-size: 11px; color: #4a4f6a; }
+</style>
+</head>
+<body>
+<div class="slide">
+
+  <!-- Header -->
+  <div class="header">
+    <div>
+      <div class="label-chip">Confusion Matrix Analysis</div>
+      <h1>Fine-tuned v5 <span>혼동행렬</span> 분석</h1>
+      <div class="subtitle">KoELECTRA v5 파인튜닝 모델 · 전체 파이프라인 기준 (키워드 필터 + KoELECTRA)</div>
+    </div>
+    <div class="meta-box">
+      <div><strong>테스트셋</strong> mixed_test_v4.json · 4,390개</div>
+      <div><strong>피싱</strong> 303개 &nbsp;/&nbsp; <strong>정상</strong> 4,087개</div>
+      <div><strong>임계값</strong> danger_level ≥ 0.5</div>
+    </div>
+  </div>
+
+  <!-- Body -->
+  <div class="body">
+
+    <!-- Left: Matrix + Metrics -->
+    <div class="cm-wrap">
+      <div class="cm-title">혼동행렬 (Confusion Matrix)</div>
+      <div class="cm-grid">
+        <!-- row 0 -->
+        <div class="cm-axis"></div>
+        <div class="cm-axis col">예측 피싱</div>
+        <div class="cm-axis col">예측 정상</div>
+        <!-- row 1 -->
+        <div class="cm-axis">실제 피싱</div>
+        <div class="cm-cell cell-tp">
+          <div class="val">244</div>
+          <div class="tag">TP</div>
+          <div class="desc">정확 탐지</div>
+        </div>
+        <div class="cm-cell cell-fn">
+          <div class="val">59</div>
+          <div class="tag">FN · 미탐</div>
+          <div class="desc">키워드 필터 미통과</div>
+        </div>
+        <!-- row 2 -->
+        <div class="cm-axis">실제 정상</div>
+        <div class="cm-cell cell-fp">
+          <div class="val">2</div>
+          <div class="tag">FP · 오탐</div>
+          <div class="desc">개인정보 패턴 혼동</div>
+        </div>
+        <div class="cm-cell cell-tn">
+          <div class="val">4,085</div>
+          <div class="tag">TN</div>
+          <div class="desc">정확 정상 판별</div>
+        </div>
+      </div>
+
+      <!-- Key Metrics -->
+      <div class="key-metrics">
+        <div class="km-cell">
+          <div class="km-label">Precision</div>
+          <div class="km-val">99.2%</div>
+        </div>
+        <div class="km-cell">
+          <div class="km-label">Recall</div>
+          <div class="km-val">80.5%</div>
+        </div>
+        <div class="km-cell">
+          <div class="km-label">F1-Score</div>
+          <div class="km-val">88.9%</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Analysis -->
+    <div class="analysis">
+
+      <div class="an-card">
+        <div class="an-header">
+          <span class="an-badge badge-green">TP 244 · TN 4,085</span>
+          <span class="an-title">정확 탐지 · 정확 정상 판별</span>
+        </div>
+        <div class="an-body">
+          피싱 303개 중 <strong>244개 정확 탐지</strong>, 정상 4,087개 중 <strong>4,085개 정확 통과</strong>.
+          KoELECTRA가 트리거된 379건 중 오탐은 2건뿐으로, 모델 자체 정밀도는 매우 높음.
+        </div>
+      </div>
+
+      <div class="an-card">
+        <div class="an-header">
+          <span class="an-badge badge-orange">FN 59 · 미탐</span>
+          <span class="an-title">원인: 1차 키워드 필터 한계</span>
+        </div>
+        <div class="an-body">
+          미탐 <strong>59건 전부 키워드 필터 미통과</strong> — KoELECTRA 추론 단계에 도달하지 못함.
+          모델 자체 오류가 아닌 1차 필터의 커버리지 문제.
+        </div>
+        <div class="an-example">
+          <span class="highlight">"저는 소비자원입니다. 오늘 중에 서류 제출하셔야 지원을 받을 수 있습니다…"</span><br>
+          → 피싱 키워드 없음 · 필터 score = 0 → KoELECTRA 미도달 → 미탐
+        </div>
+        <div class="an-note">
+          💡 테스트 문장이 짧고 단편적이어서 키워드가 드러나지 않은 경우.
+          실제 통화에서는 <strong class="highlight">fulltext(전체 문맥)</strong>로 입력되므로
+          기관 사칭·금전 요구 키워드가 앞뒤 맥락에서 등장할 가능성이 훨씬 높아 탐지율 상승 예상.
+        </div>
+      </div>
+
+      <div class="an-card">
+        <div class="an-header">
+          <span class="an-badge badge-red">FP 2 · 오탐</span>
+          <span class="an-title">원인: 정상 데이터 다양성 부족</span>
+        </div>
+        <div class="an-body">
+          <strong>"성함과 주민번호 앞자리를 말씀해 주시면…"</strong> — 은행 상담 문맥이나 개인정보 패턴에 반응.<br>
+          <strong>"이체하려고 하는데 비밀번호가 생각이 안나네요"</strong> — 금전·개인정보 패턴 혼동.
+        </div>
+        <div class="an-note">
+          학습 데이터에 <strong class="highlight">이와 유사한 정상 발화 샘플이 부족</strong>해 발생.
+          금융 상담·은행 업무 정상 발화 데이터를 추가 학습하면 해소 가능.
+          <strong>오탐률 2/4,087 = 0.05%</strong> — 현재 수준에서 실서비스 배포 요건 충족.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="takeaway">
+      <div class="tk-item">
+        <div class="tk-dot"></div>
+        <span>KoELECTRA 자체 오탐률 <strong style="color:#4eca8b;">0.05%</strong> — Precision 99.2%</span>
+      </div>
+      <div class="tk-item">
+        <div class="tk-dot"></div>
+        <span>미탐 59건 전부 키워드 필터 단계 문제 — <strong style="color:#f0a05a;">모델 한계 아님</strong></span>
+      </div>
+      <div class="tk-item">
+        <div class="tk-dot"></div>
+        <span>fulltext 입력 시 Recall 추가 상승 예상</span>
+      </div>
+    </div>
+    <div class="page-info">mixed_test_v4.json · v5 model · threshold=0.5</div>
+  </div>
+
+</div>
+</body>
+</html>

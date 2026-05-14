@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KoELECTRA 파인튜닝 성능 비교</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;600;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #0f1117;
+    color: #e8eaf0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .slide {
+    width: 1280px;
+    min-height: 720px;
+    background: linear-gradient(135deg, #13151f 0%, #1a1d2e 100%);
+    border: 1px solid #2a2d3e;
+    border-radius: 12px;
+    padding: 48px 56px;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: 32px;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+  }
+
+  /* ── Header ── */
+  .header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    border-bottom: 1px solid #2a2d3e;
+    padding-bottom: 24px;
+  }
+  .title-block { }
+  .label-chip {
+    display: inline-block;
+    background: #1e3a5f;
+    color: #5b9bd5;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+  h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.3;
+  }
+  h1 span { color: #5b9bd5; }
+  .subtitle {
+    font-size: 13px;
+    color: #7a7f9a;
+    margin-top: 6px;
+  }
+  .meta-box {
+    text-align: right;
+    font-size: 12px;
+    color: #6a6f8a;
+    line-height: 1.8;
+  }
+  .meta-box strong { color: #9ba4c0; }
+
+  /* ── Body Grid ── */
+  .body { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+
+  /* ── Card ── */
+  .card {
+    background: #1c1f30;
+    border: 1px solid #2a2d3e;
+    border-radius: 10px;
+    padding: 22px 24px;
+  }
+  .card-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #6a6f8a;
+    margin-bottom: 16px;
+  }
+
+  /* ── Comparison Table ── */
+  .cmp-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 6px;
+    font-size: 13px;
+  }
+  .cmp-table th {
+    text-align: center;
+    font-size: 11px;
+    font-weight: 600;
+    color: #6a6f8a;
+    padding: 4px 8px;
+    letter-spacing: 0.5px;
+  }
+  .cmp-table th:first-child { text-align: left; }
+  .cmp-table td {
+    text-align: center;
+    padding: 9px 8px;
+    background: #13151f;
+    border-top: 1px solid #1e2030;
+    border-bottom: 1px solid #1e2030;
+  }
+  .cmp-table td:first-child {
+    text-align: left;
+    padding-left: 14px;
+    font-weight: 600;
+    border-radius: 6px 0 0 6px;
+    border-left: 1px solid #1e2030;
+    color: #c8cad8;
+  }
+  .cmp-table td:last-child {
+    border-radius: 0 6px 6px 0;
+    border-right: 1px solid #1e2030;
+  }
+  .val-base  { color: #ef6c6c; font-weight: 700; }
+  .val-ft    { color: #4eca8b; font-weight: 700; font-size: 14px; }
+  .val-delta {
+    color: #5b9bd5;
+    font-weight: 700;
+    font-size: 12px;
+  }
+  .row-divider td {
+    background: #1a1d2e !important;
+    border: none !important;
+    height: 4px;
+    padding: 0 !important;
+  }
+
+  /* ── Big Metric ── */
+  .big-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .metric-cell {
+    background: #13151f;
+    border: 1px solid #2a2d3e;
+    border-radius: 8px;
+    padding: 14px 12px;
+    text-align: center;
+  }
+  .metric-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: #6a6f8a;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .metric-before {
+    font-size: 11px;
+    color: #ef6c6c;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+  .metric-after {
+    font-size: 26px;
+    font-weight: 900;
+    color: #4eca8b;
+    line-height: 1;
+  }
+  .metric-delta {
+    font-size: 11px;
+    color: #5b9bd5;
+    font-weight: 700;
+    margin-top: 4px;
+  }
+
+  /* ── Examples ── */
+  .examples { display: flex; flex-direction: column; gap: 10px; }
+  .ex-item {
+    background: #13151f;
+    border: 1px solid #2a2d3e;
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 12px;
+    line-height: 1.6;
+  }
+  .ex-text {
+    color: #c8cad8;
+    margin-bottom: 7px;
+    font-style: italic;
+  }
+  .ex-text::before { content: '"'; color: #5b9bd5; font-style: normal; }
+  .ex-text::after  { content: '"'; color: #5b9bd5; font-style: normal; }
+  .ex-tags { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .ex-tags span { font-size: 10px; font-weight: 600; letter-spacing: 0.5px; }
+  .tag-label { color: #6a6f8a; }
+  .tag-chip {
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 700;
+  }
+  .chip-true    { background: #1a2e1a; color: #4eca8b; border: 1px solid #2a4a2a; }
+  .chip-base    { background: #2e1a1a; color: #ef6c6c; border: 1px solid #4a2a2a; }
+  .chip-ft      { background: #1a2e2e; color: #4ec8ca; border: 1px solid #2a4a4a; }
+  .chip-normal  { background: #1e2030; color: #7a7f9a; border: 1px solid #2a2d3e; }
+  .sep { color: #3a3d4e; }
+
+  /* ── Footer ── */
+  .footer {
+    border-top: 1px solid #2a2d3e;
+    padding-top: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .takeaway {
+    display: flex;
+    gap: 24px;
+  }
+  .takeaway-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: #9ba4c0;
+  }
+  .takeaway-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #4eca8b;
+    flex-shrink: 0;
+  }
+  .page-info { font-size: 11px; color: #4a4f6a; }
+</style>
+</head>
+<body>
+<div class="slide">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="title-block">
+      <div class="label-chip">Model Performance Evaluation</div>
+      <h1>KoELECTRA <span>파인튜닝</span> 전·후 성능 비교</h1>
+      <div class="subtitle">보이스피싱 멀티라벨 분류 — 기관사칭 / 금전요구 / 개인정보</div>
+    </div>
+    <div class="meta-box">
+      <div><strong>모델</strong> monologg/koelectra-base-v3</div>
+      <div><strong>테스트셋</strong> 806개 (피싱 403 + 정상 403)</div>
+      <div><strong>임계값</strong> 0.5 · 손실함수 BCEWithLogitsLoss</div>
+    </div>
+  </div>
+
+  <!-- Body -->
+  <div class="body">
+
+    <!-- Left: Metrics -->
+    <div>
+      <!-- Big 3 -->
+      <div class="card" style="margin-bottom: 20px;">
+        <div class="card-title">Macro Average — Precision / Recall / F1</div>
+        <div class="big-metrics">
+          <div class="metric-cell">
+            <div class="metric-label">Precision</div>
+            <div class="metric-before">0.249</div>
+            <div class="metric-after">0.936</div>
+            <div class="metric-delta">▲ +0.687</div>
+          </div>
+          <div class="metric-cell">
+            <div class="metric-label">Recall</div>
+            <div class="metric-before">0.339</div>
+            <div class="metric-after">0.951</div>
+            <div class="metric-delta">▲ +0.612</div>
+          </div>
+          <div class="metric-cell">
+            <div class="metric-label">F1-Score</div>
+            <div class="metric-before">0.245</div>
+            <div class="metric-after">0.944</div>
+            <div class="metric-delta">▲ +0.699</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Per-category -->
+      <div class="card">
+        <div class="card-title">카테고리별 F1-Score</div>
+        <table class="cmp-table">
+          <thead>
+            <tr>
+              <th>카테고리</th>
+              <th>Base</th>
+              <th>Fine-tuned</th>
+              <th>향상</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>기관사칭</td>
+              <td class="val-base">0.483</td>
+              <td class="val-ft">1.000</td>
+              <td class="val-delta">+0.517</td>
+            </tr>
+            <tr>
+              <td>금전요구</td>
+              <td class="val-base">0.251</td>
+              <td class="val-ft">0.905</td>
+              <td class="val-delta">+0.653</td>
+            </tr>
+            <tr>
+              <td>개인정보</td>
+              <td class="val-base">0.000</td>
+              <td class="val-ft">0.926</td>
+              <td class="val-delta">+0.926</td>
+            </tr>
+            <tr class="row-divider"><td colspan="4"></td></tr>
+            <tr>
+              <td style="color:#9ba4c0;">Macro F1</td>
+              <td class="val-base">0.245</td>
+              <td class="val-ft">0.944</td>
+              <td class="val-delta">+0.699</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Right: Examples -->
+    <div class="card">
+      <div class="card-title">추론 예시 — Fine-tuned ✓ &nbsp;/&nbsp; Base ✗</div>
+      <div class="examples">
+
+        <div class="ex-item">
+          <div class="ex-text">여보세요, 제가 서울중앙지검에서 연락 드린 김 검사입니다. 귀하의 계좌가 범죄에 연루된 것 같습니다…</div>
+          <div class="ex-tags">
+            <span class="tag-label">실제</span>
+            <span class="tag-chip chip-true">기관사칭</span>
+            <span class="tag-chip chip-true">금전요구</span>
+            <span class="tag-chip chip-true">개인정보</span>
+            <span class="sep">|</span>
+            <span class="tag-label">Base</span>
+            <span class="tag-chip chip-base">기관사칭만</span>
+            <span class="sep">|</span>
+            <span class="tag-label">FT</span>
+            <span class="tag-chip chip-ft">3개 정확 탐지</span>
+          </div>
+        </div>
+
+        <div class="ex-item">
+          <div class="ex-text">고객님께서 보유하고 계신 현금카드를 저희에게 잠깐 맡겨주시면, 한 달 세금을 줄여드리는 방식이에요…</div>
+          <div class="ex-tags">
+            <span class="tag-label">실제</span>
+            <span class="tag-chip chip-true">금전요구</span>
+            <span class="tag-chip chip-true">개인정보</span>
+            <span class="sep">|</span>
+            <span class="tag-label">Base</span>
+            <span class="tag-chip chip-base">기관사칭(오탐)</span>
+            <span class="sep">|</span>
+            <span class="tag-label">FT</span>
+            <span class="tag-chip chip-ft">정확 분류</span>
+          </div>
+        </div>
+
+        <div class="ex-item">
+          <div class="ex-text">네. OO은행을 주거래로 하고 있습니다.</div>
+          <div class="ex-tags">
+            <span class="tag-label">실제</span>
+            <span class="tag-chip chip-normal">정상</span>
+            <span class="sep">|</span>
+            <span class="tag-label">Base</span>
+            <span class="tag-chip chip-base">기관사칭(오탐)</span>
+            <span class="sep">|</span>
+            <span class="tag-label">FT</span>
+            <span class="tag-chip chip-ft">정상 정확 판별</span>
+          </div>
+        </div>
+
+        <div class="ex-item">
+          <div class="ex-text">그러니깐 후유증의 범위가 어떻게 된다는건지..</div>
+          <div class="ex-tags">
+            <span class="tag-label">실제</span>
+            <span class="tag-chip chip-normal">정상</span>
+            <span class="sep">|</span>
+            <span class="tag-label">Base</span>
+            <span class="tag-chip chip-base">기관사칭(오탐)</span>
+            <span class="sep">|</span>
+            <span class="tag-label">FT</span>
+            <span class="tag-chip chip-ft">정상 정확 판별</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="takeaway">
+      <div class="takeaway-item">
+        <div class="takeaway-dot"></div>
+        <span>파인튜닝으로 Macro F1 <strong style="color:#4eca8b;">0.245 → 0.944</strong></span>
+      </div>
+      <div class="takeaway-item">
+        <div class="takeaway-dot"></div>
+        <span>개인정보 카테고리 <strong style="color:#4eca8b;">0.000 → 0.926</strong> (완전 부재 → 정확 탐지)</span>
+      </div>
+      <div class="takeaway-item">
+        <div class="takeaway-dot"></div>
+        <span>정상 발화 오탐 대폭 감소 (Base: 무분별 기관사칭 출력)</span>
+      </div>
+    </div>
+    <div class="page-info">benchmark.py · test_size=806 · threshold=0.5</div>
+  </div>
+
+</div>
+</body>
+</html>
