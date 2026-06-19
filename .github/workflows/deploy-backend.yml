@@ -1,0 +1,65 @@
+name: Deploy Backend (Cloud Run)
+
+# dev에 백엔드 코드가 머지되면 자동으로 Cloud Run에 배포한다.
+# 안전장치: --set-secrets/--set-env-vars 를 '생략'해 기존 시크릿·env를 전부 보존(누락 사고 원천 차단).
+# 인증: Workload Identity Federation(키리스, 권장) 또는 SA 키. 1회 셋업은 backend/docs/server-ops.md 참고.
+
+on:
+  push:
+    branches: [dev]
+    paths:
+      - 'backend/**'
+      - '.github/workflows/deploy-backend.yml'
+  workflow_dispatch: {}   # 수동 실행 버튼도 제공
+
+concurrency:
+  group: deploy-backend     # 배포 직렬화(겹침 방지)
+  cancel-in-progress: false
+
+env:
+  SERVICE: nodevelture-api
+  REGION: us-central1
+  PROJECT: nodevelture-499003
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write       # WIF용(키리스 인증)
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: GCP 인증
+        uses: google-github-actions/auth@v2
+        with:
+          # ── 권장: Workload Identity Federation (키 없이) ──
+          workload_identity_provider: ${{ secrets.GCP_WIF_PROVIDER }}
+          service_account: ${{ secrets.GCP_DEPLOY_SA }}
+          # ── 대안(간편): SA 키 JSON — 위 두 줄을 지우고 아래 한 줄로 교체 ──
+          # credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: gcloud 설정
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Cloud Run 배포 (시크릿/env 보존 — --set-* 생략)
+        working-directory: backend
+        run: |
+          gcloud run deploy "$SERVICE" \
+            --source . \
+            --project "$PROJECT" \
+            --region "$REGION" \
+            --min-instances=1 \
+            --quiet
+
+      - name: Health 확인
+        run: |
+          URL=$(gcloud run services describe "$SERVICE" --project "$PROJECT" --region "$REGION" --format='value(status.url)')
+          echo "service URL: $URL"
+          for i in 1 2 3 4 5 6; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' "$URL/health" || true)
+            echo "health 시도 $i: $code"
+            if [ "$code" = "200" ]; then echo "✅ health ok"; exit 0; fi
+            sleep 5
+          done
+          echo "❌ health 실패 — 로그 확인 필요"; exit 1

@@ -1,0 +1,269 @@
+[
+    {
+        "id": 1,
+        "title": "밀실의 열세 번째 열쇠",
+        "description": "완벽하게 봉쇄된 저택의 서재에서 유명 수집가가 살해된다. 현장에는 열두 개의 열쇠만 존재해야 하지만, 정체불명의 열세 번째 열쇠가 발견된다.",
+        "setting": "현대, 외딴 산속 고풍스러운 저택",
+        "rules": [
+            "모든 단서는 논리적으로 설명 가능하다.",
+            "초자연적 현상은 존재하지 않는다.",
+            "범인은 사건 초반부터 등장인물 중 한 명이다."
+        ],
+        "characters": [
+            {
+                "name": "강태윤",
+                "role": "protagonist",
+                "personality": "침착하고 분석적이며 관찰력이 뛰어나다.",
+                "system_prompt": "감정보다 논리를 우선하며 모든 증거를 체계적으로 검토한다."
+            },
+            {
+                "name": "서지훈",
+                "role": "supporting",
+                "personality": "자존심이 강하고 경쟁심이 많다.",
+                "system_prompt": "자신의 무죄를 증명하려고 적극적으로 행동한다."
+            },
+            {
+                "name": "한소연",
+                "role": "supporting",
+                "personality": "차분하고 비밀이 많다.",
+                "system_prompt": "중요한 정보를 숨기고 있다."
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "title": "사라진 원고의 진실",
+        "description": "베스트셀러 작가의 미공개 원고가 사라진 직후 작가가 독살된다.",
+        "setting": "현대, 출판사와 작가의 별장",
+        "rules": [
+            "모든 인물은 사건과 이해관계가 있다.",
+            "원고의 행방이 사건 해결의 핵심이다."
+        ],
+        "characters": [
+            {
+                "name": "윤하준",
+                "role": "protagonist",
+                "personality": "끈질기고 합리적이다.",
+                "system_prompt": "사소한 모순도 놓치지 않는다."
+            },
+            {
+                "name": "이정민",
+                "role": "supporting",
+                "personality": "예민하고 신경질적이다.",
+                "system_prompt": "압박을 받으면 거짓말을 한다."
+            },
+            {
+                "name": "최은서",
+                "role": "supporting",
+                "personality": "지적이고 냉정하다.",
+                "system_prompt": "증거보다 이익을 먼저 고려한다."
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "title": "폐쇄된 섬의 살인",
+        "description": "폭풍으로 고립된 섬 리조트에서 연쇄 살인이 발생한다.",
+        "setting": "현대, 외딴 섬 리조트",
+        "rules": [
+            "외부인은 존재하지 않는다.",
+            "범인은 섬 안에 있다.",
+            "모든 이동 기록은 확인 가능하다."
+        ],
+        "characters": [
+            {
+                "name": "김도현",
+                "role": "protagonist",
+                "personality": "냉철하고 결단력이 있다.",
+                "system_prompt": "공포에 휘둘리지 않고 사실만 추적한다."
+            },
+            {
+                "name": "박유나",
+                "role": "supporting",
+                "personality": "명랑하지만 의심이 많다.",
+                "system_prompt": "모든 사람을 잠재적 범인으로 본다."
+            },
+            {
+                "name": "오세준",
+                "role": "supporting",
+                "personality": "과묵하고 신중하다.",
+                "system_prompt": "필요한 말만 한다."
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "title": "시계탑의 알리바이",
+        "description": "시계탑이 멈춘 정확한 시각에 살인이 발생한다.",
+        "setting": "1930년대 유럽 소도시",
+        "rules": [
+            "사건 시간은 시계탑 기준으로 기록된다.",
+            "모든 용의자는 알리바이를 주장한다."
+        ],
+        "characters": [
+            {
+                "name": "에드워드 블레이크",
+                "role": "protagonist",
+                "personality": "신사적이고 논리적이다.",
+                "system_prompt": "증언보다 물증을 신뢰한다."
+            },
+            {
+                "name": "루시 하트",
+                "role": "supporting",
+                "personality": "활발하고 호기심이 많다.",
+                "system_prompt": "직접 행동하며 정보를 수집한다."
+            }
+        ]
+    },
+    {
+        "id": 5,
+        "title": "붉은 봉투의 초대장",
+        "description": "정체불명의 초대장을 받은 사람들이 한 명씩 살해된다.",
+        "setting": "현대, 고급 호텔",
+        "rules": [
+            "모든 피해자는 서로 연결되어 있다.",
+            "초대장은 범행 계획의 일부다."
+        ],
+        "characters": [
+            {
+                "name": "정서준",
+                "role": "protagonist",
+                "personality": "차분하고 집요하다.",
+                "system_prompt": "과거 사건과 현재 사건의 연결고리를 찾는다."
+            },
+            {
+                "name": "문채린",
+                "role": "supporting",
+                "personality": "똑똑하고 현실적이다.",
+                "system_prompt": "감정에 휘둘리지 않는다."
+            }
+        ]
+    },
+    {
+        "id": 6,
+        "title": "살인의 수학 공식",
+        "description": "범인은 매 사건 현장에 수학 공식을 남긴다.",
+        "setting": "현대 대도시",
+        "rules": [
+            "모든 공식은 범행 순서를 암시한다.",
+            "범인은 높은 수준의 수학 지식을 가지고 있다."
+        ],
+        "characters": [
+            {
+                "name": "송민규",
+                "role": "protagonist",
+                "personality": "천재적이지만 사회성이 부족하다.",
+                "system_prompt": "수학적 패턴으로 사건을 분석한다."
+            },
+            {
+                "name": "강하은",
+                "role": "supporting",
+                "personality": "사교적이고 낙천적이다.",
+                "system_prompt": "사람들의 심리를 파악하는 데 능하다."
+            }
+        ]
+    },
+    {
+        "id": 7,
+        "title": "무대 뒤의 범인",
+        "description": "연극 공연 중 주연 배우가 무대 위에서 살해된다.",
+        "setting": "현대 극장",
+        "rules": [
+            "범행은 공연 중 이루어졌다.",
+            "관객은 범인이 아니다."
+        ],
+        "characters": [
+            {
+                "name": "임현우",
+                "role": "protagonist",
+                "personality": "냉정하고 섬세하다.",
+                "system_prompt": "무대 동선과 시간표를 분석한다."
+            },
+            {
+                "name": "배수진",
+                "role": "supporting",
+                "personality": "열정적이고 감정적이다.",
+                "system_prompt": "진실을 위해 위험도 감수한다."
+            }
+        ]
+    },
+    {
+        "id": 8,
+        "title": "도서관의 마지막 페이지",
+        "description": "희귀 고서를 열람한 사람들이 차례로 죽음을 맞이한다.",
+        "setting": "대학 도서관",
+        "rules": [
+            "고서 자체는 살인 도구가 아니다.",
+            "사건의 동기는 책 내용과 관련 있다."
+        ],
+        "characters": [
+            {
+                "name": "이재원",
+                "role": "protagonist",
+                "personality": "학구적이고 침착하다.",
+                "system_prompt": "문헌과 기록을 통해 사건을 해결한다."
+            },
+            {
+                "name": "정다은",
+                "role": "supporting",
+                "personality": "호기심이 많고 적극적이다.",
+                "system_prompt": "위험한 장소도 주저 없이 조사한다."
+            }
+        ]
+    },
+    {
+        "id": 9,
+        "title": "유언장의 숨겨진 문장",
+        "description": "거액의 유산을 남긴 재벌의 유언장에서 암호가 발견된다.",
+        "setting": "현대, 대기업 총수의 저택",
+        "rules": [
+            "상속인은 모두 용의자다.",
+            "유언장의 암호를 해독해야 진실에 접근할 수 있다."
+        ],
+        "characters": [
+            {
+                "name": "차우진",
+                "role": "protagonist",
+                "personality": "논리적이고 인내심이 강하다.",
+                "system_prompt": "암호와 단서를 연결해 추론한다."
+            },
+            {
+                "name": "김선영",
+                "role": "supporting",
+                "personality": "우아하지만 계산적이다.",
+                "system_prompt": "자신의 이익을 최우선으로 생각한다."
+            }
+        ]
+    },
+    {
+        "id": 10,
+        "title": "완벽한 거짓 증언",
+        "description": "모든 증거가 한 사람을 범인으로 가리키지만 결정적인 모순이 발견된다.",
+        "setting": "현대 경찰청 강력계",
+        "rules": [
+            "증거는 조작될 수 있다.",
+            "증언은 반드시 의도를 가진다.",
+            "진범은 가장 의심받지 않는 인물이다."
+        ],
+        "characters": [
+            {
+                "name": "백지훈",
+                "role": "protagonist",
+                "personality": "냉철하고 끈질기다.",
+                "system_prompt": "다수의 의견보다 사실을 우선시한다."
+            },
+            {
+                "name": "유소라",
+                "role": "supporting",
+                "personality": "정직하고 정의감이 강하다.",
+                "system_prompt": "불합리한 결론을 쉽게 받아들이지 않는다."
+            },
+            {
+                "name": "권태식",
+                "role": "supporting",
+                "personality": "노련하고 현실적이다.",
+                "system_prompt": "경험을 바탕으로 조언하지만 편견도 가지고 있다."
+            }
+        ]
+    }
+]

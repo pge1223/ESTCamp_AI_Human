@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chat 데이터 흐름 — AI 빙의작가</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans KR',sans-serif;background:#f9f8f5;color:#1a1a18;font-size:14px;line-height:1.6}
+code{font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace;font-size:12.5px;background:#f0eeea;padding:1px 5px;border-radius:4px;color:#3d3c38}
+.container{max-width:780px;margin:0 auto;padding:2rem 1.5rem 4rem}
+.page-header{padding-bottom:1.25rem;border-bottom:1.5px solid #e2e0d8;margin-bottom:1.75rem}
+.page-header h1{font-size:22px;font-weight:600;color:#1a1a18;margin-bottom:4px}
+.page-header p{font-size:13px;color:#6b6a65}
+.tab-bar{display:flex;gap:2px;border-bottom:1px solid #e2e0d8;margin-bottom:1.75rem;overflow-x:auto}
+.tab-btn{flex-shrink:0;padding:9px 16px;font-size:13px;font-weight:400;color:#6b6a65;background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;transition:color .15s,border-color .15s;margin-bottom:-1px;white-space:nowrap;font-family:inherit}
+.tab-btn:hover{color:#1a1a18}
+.tab-btn.active{color:#1a1a18;font-weight:500;border-bottom-color:#1a1a18}
+.panel{display:none}.panel.active{display:block}
+.sec-label{font-size:11.5px;font-weight:600;color:#888780;text-transform:uppercase;letter-spacing:.06em;margin:1.4rem 0 0.6rem}
+.sec-label:first-child{margin-top:0}
+.card{background:#fff;border:0.5px solid #dddbd3;border-radius:12px;padding:1rem 1.25rem;margin-bottom:0.75rem}
+.flow{background:#f4f2ed;border-radius:8px;padding:0.75rem 1rem;font-size:11.5px;font-family:'SFMono-Regular',Consolas,monospace;line-height:2;color:#2c2c2a;white-space:pre-wrap;word-break:break-all;margin-bottom:0.5rem}
+.step{display:flex;gap:10px;align-items:flex-start;margin-bottom:9px}
+.sn{min-width:22px;height:22px;border-radius:50%;font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.sn-p{background:#EEEDFE;color:#534AB7}
+.sn-t{background:#E1F5EE;color:#0F6E56}
+.sn-b{background:#E6F1FB;color:#185FA5}
+.sn-o{background:#FAECE7;color:#993C1D}
+.st{font-size:13px;color:#1a1a18;line-height:1.6}
+.ss{font-size:12px;color:#6b6a65;margin-top:2px}
+.ab{display:inline-block;padding:2px 7px;border-radius:4px;font-size:11px;font-family:monospace;font-weight:600;margin-right:3px}
+.ab-g{background:#EAF3DE;color:#3B6D11}
+.ab-b{background:#E6F1FB;color:#185FA5}
+.ab-u{background:#FAEEDA;color:#854F0B}
+.tag{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:500;margin-right:3px}
+.tdb{background:#E6F1FB;color:#185FA5}
+.trd{background:#EAF3DE;color:#3B6D11}
+.tllm{background:#EEEDFE;color:#534AB7}
+.trag{background:#FAEEDA;color:#854F0B}
+.tloc{background:#FAECE7;color:#993C1D}
+.note{background:#f4f2ed;border-left:2px solid #c4c2ba;padding:0.65rem 0.9rem;font-size:12px;color:#5e5d59;line-height:1.6;margin-bottom:0.75rem}
+.dt{width:100%;border-collapse:collapse;font-size:12.5px}
+.dt th{text-align:left;padding:7px 10px;font-weight:500;color:#888780;border-bottom:0.5px solid #e2e0d8;font-size:12px}
+.dt td{padding:8px 10px;border-bottom:0.5px solid #e8e6de;color:#1a1a18;vertical-align:top;line-height:1.5}
+.dt tr:last-child td{border-bottom:none}
+.dt td:first-child{font-weight:500;white-space:nowrap;color:#6b6a65}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.5rem}
+.trig{background:#f4f2ed;border-radius:8px;padding:0.65rem 0.8rem;font-size:12px}
+.trig .tl{font-weight:600;color:#1a1a18;margin-bottom:3px;font-size:12.5px}
+.trig .td2{color:#6b6a65;font-size:11.5px;line-height:1.5}
+.mini-lbl{font-size:11px;font-weight:600;color:#1D9E75;text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px}
+@media(max-width:600px){.g2,.g3{grid-template-columns:1fr}.tab-btn{padding:8px 12px;font-size:12px}}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="page-header">
+  <h1>Chat 페이지 데이터 흐름</h1>
+  <p>스토리 채팅 · 작가 AI · 취향저격 AI · 작가 피드백 · 맞춤법 교정</p>
+</div>
+
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab(0)">1 · 스토리 채팅</button>
+  <button class="tab-btn" onclick="switchTab(1)">2 · 작가 AI</button>
+  <button class="tab-btn" onclick="switchTab(2)">3 · 취향저격 AI</button>
+  <button class="tab-btn" onclick="switchTab(3)">4 · 작가 피드백</button>
+  <button class="tab-btn" onclick="switchTab(4)">5 · 맞춤법 교정</button>
+</div>
+
+<!-- TAB 1 -->
+<div class="panel active" id="p0">
+  <div class="sec-label">페이지 진입 시 초기 로드</div>
+  <div class="card">
+    <div class="step"><div class="sn sn-p">1</div><div class="st"><code>getSession(chatId)</code><div class="ss">DB: sessions 테이블</div></div></div>
+    <div class="step"><div class="sn sn-p">2</div><div class="st"><code>getWorld(session.world_id)</code><div class="ss">DB: worlds 테이블</div></div></div>
+    <div class="step"><div class="sn sn-p">3</div><div class="st"><code>getCharacters(world_id)</code><div class="ss">DB: characters 테이블</div></div></div>
+    <div class="step"><div class="sn sn-p">4</div><div class="st"><code>getDialogues(chatId)</code><div class="ss">DB: dialogues 테이블 — 이전 대화 전체 복원, narration + "대사" 포맷 파싱</div></div></div>
+  </div>
+
+  <div class="sec-label">사용자 대사 전송 흐름</div>
+  <div class="card">
+    <div class="step"><div class="sn sn-b">①</div><div class="st"><span class="ab ab-b">POST</span><code>/chats/{chatId}/messages</code><div class="ss">사용자 메시지 먼저 저장 · Redis history lpush (최대 20턴) · DB Dialogue insert (speaker_type=user)</div></div></div>
+    <div class="step"><div class="sn sn-t">②</div><div class="st"><span class="ab ab-g">GET</span><code>/chats/{chatId}/stream</code> (SSE)<div class="ss">params: content, character_id, world_context, speaker, check_consistency</div></div></div>
+  </div>
+
+  <div class="sec-label">백엔드 /stream 내부 처리</div>
+  <div class="card">
+    <div class="flow">get_context(chatId)
+  ├─ Redis: history        최근 20턴
+  ├─ Redis: state          내부 서사 상태(internal_note)
+  ├─ Redis: summary        누적 줄거리 요약
+  ├─ Redis: characters     등장인물 캐시
+  ├─ Redis: memos          작가 메모
+  └─ Redis: phase          도입부/전개/절정/결말
+
+world_context 없으면 → DB 직접 빌드
+  ├─ Session → World (제목/장르/배경/요약/규칙)
+  └─ Characters · Session.story_summary
+
+RAG: memory.retrieve_relevant(chatId, db, content)
+
+build_messages() → LLM 호출
+  ├─ system: CRITICAL_OUTPUT_RULE + protagonist_rule + 작가 페르소나
+  └─ context: 등장인물 · 줄거리 · 메모 · RAG · 현재 상태 · 스토리 단계 · 최근 10턴</div>
+  </div>
+
+  <div class="sec-label">AI 응답 수신 후 처리</div>
+  <div class="card">
+    <div style="font-size:12px;color:#6b6a65;margin-bottom:8px">SSE "reply" 이벤트 필드: <code>narration · speaker · dialogue · protagonist_dialogue · memories · consistency</code></div>
+    <div class="step"><div class="sn sn-p">↓</div><div class="st"><code>_resolve_speaker()</code> — AI 인물로 강제 보정 / 나레이션 솔로 신호 감지 시 speaker 비움</div></div>
+    <div class="step"><div class="sn sn-p">↓</div><div class="st">story_phase 역행 방지 로직 적용</div></div>
+    <div class="step"><div class="sn sn-p">↓</div><div class="st">Redis history append · state 갱신 · DB Dialogue insert · ApiLog insert</div></div>
+    <div class="step"><div class="sn sn-p">↓</div><div class="st">5턴마다 <code>memory.refresh_session_summary()</code> → Redis → DB 동기화</div></div>
+  </div>
+
+  <div class="g2">
+    <div>
+      <div class="sec-label">입력 추천 (💡)</div>
+      <div class="card" style="font-size:12.5px">
+        음성 프로파일 있으면<br><span class="ab ab-b">POST</span><code>/voice-suggest</code><br>
+        <span style="color:#6b6a65;font-size:11.5px">payload: npc_dialogue, genre</span>
+        <div style="margin-top:8px">없으면<br><span class="ab ab-b">POST</span><code>/suggestions</code><br>
+        <span style="color:#6b6a65;font-size:11.5px">payload: character_id, world_context</span></div>
+      </div>
+    </div>
+    <div>
+      <div class="sec-label">작가 리액션</div>
+      <div class="card" style="font-size:12.5px">
+        <span class="ab ab-b">POST</span><code>/reaction</code><br>
+        <span style="color:#6b6a65;font-size:11.5px">payload: content, character_id, world_context</span>
+        <div style="margin-top:8px;color:#6b6a65">작가 페르소나 한 줄 리액션 → 아바타 15초 표시</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-label">참고 데이터 레이어</div>
+  <div class="card" style="padding:0.75rem">
+    <table class="dt">
+      <thead><tr><th>레이어</th><th>데이터</th></tr></thead>
+      <tbody>
+        <tr><td><span class="tag tdb">DB</span></td><td>Session, World, Character, Dialogue</td></tr>
+        <tr><td><span class="tag trd">Redis</span></td><td>history (20턴) · state · summary · characters · memos · phase · turn 카운터</td></tr>
+        <tr><td><span class="tag tllm">LLM context</span></td><td>세계관 · 인물 지시문 · 줄거리 · 메모 · RAG · 현재 상태 · 스토리 단계 · 최근 10턴</td></tr>
+        <tr><td><span class="tag tloc">localStorage</span></td><td>원고 내용 · 음성 반응 ON/OFF · 능동 경고 날짜</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- TAB 2 -->
+<div class="panel" id="p1">
+  <div class="g2">
+    <div>
+      <div class="sec-label">패널 초기화</div>
+      <div class="card" style="font-size:12.5px">
+        <span class="ab ab-g">GET</span><code>/memos</code><br>
+        <span style="color:#6b6a65;font-size:11.5px">Redis: memos 목록 로드</span>
+        <div style="margin-top:8px"><code>getTaste(chatId, userId)</code><br>
+        <span style="color:#6b6a65;font-size:11.5px">DB: UserTasteProfile 복원</span></div>
+      </div>
+    </div>
+    <div>
+      <div class="sec-label">메모 저장/수정</div>
+      <div class="card" style="font-size:12.5px">
+        <span class="ab ab-u">PUT</span><code>/memos</code><br>
+        <span style="color:#6b6a65;font-size:11.5px">payload: { memos: [...] } → Redis 저장</span>
+        <div style="margin-top:8px;color:#6b6a65">다음 LLM 호출 시 [작가 메모 — 반드시 반영] context 주입</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-label">작가 패널 메시지 전송</div>
+  <div class="card">
+    <div class="step"><div class="sn sn-b">①</div><div class="st"><span class="ab ab-b">POST</span><code>/chats/{chatId}/author/message</code><div class="ss">payload: content, author_id, mode</div></div></div>
+    <div class="flow" style="margin:8px 0">백엔드 참고 데이터:
+  DB: Session → World · Characters · Dialogue 최근 5턴
+  Redis: memos · summary · author_history · prev_user_questions
+  personas.py: 백야/차로운/한여름/김도현 시스템 프롬프트</div>
+    <div class="step"><div class="sn sn-t">②</div><div class="st"><code>parseNumberedChoices()</code> — 선택지 카드 파싱<div class="ss">shouldRecommend !== false → 추천 문장 자동 요청</div></div></div>
+    <div class="step"><div class="sn sn-t">③</div><div class="st"><span class="ab ab-b">POST</span><code>/author/rewrite</code><div class="ss">payload: original, feedback, author_id</div></div></div>
+  </div>
+
+  <div class="sec-label">태그 버튼별 동작</div>
+  <div class="card" style="padding:0.75rem">
+    <table class="dt">
+      <thead><tr><th>태그</th><th>동작</th><th>API</th></tr></thead>
+      <tbody>
+        <tr><td><code>#세계관</code></td><td>세계관 정보 토글</td><td><span style="color:#aaa;font-size:11.5px">캐시 (API 없음)</span></td></tr>
+        <tr><td><code>#등장인물</code></td><td>등장인물 목록 토글</td><td><span style="color:#aaa;font-size:11.5px">캐시 (API 없음)</span></td></tr>
+        <tr><td><code>#에피소드</code></td><td>"지금까지 에피소드 정리" 자동 전송</td><td><span class="ab ab-b">POST</span><code>/author/message</code></td></tr>
+        <tr><td><code>#추천</code></td><td>대사 제안 3개 요청</td><td><span class="ab ab-b">POST</span><code>/suggestions</code></td></tr>
+        <tr><td><code>#취향저격ai</code></td><td>취향 기반 추천 (탭 3 참고)</td><td><span class="ab ab-b">POST</span><code>/taste-recommend</code></td></tr>
+        <tr><td><code>#도움말</code></td><td>사용 안내 패널 토글</td><td><span style="color:#aaa;font-size:11.5px">정적 UI</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sec-label">참고 데이터 레이어</div>
+  <div class="card" style="padding:0.75rem">
+    <table class="dt">
+      <thead><tr><th>레이어</th><th>데이터</th></tr></thead>
+      <tbody>
+        <tr><td><span class="tag tdb">DB</span></td><td>Session → World · Characters · Dialogue 최근 5턴</td></tr>
+        <tr><td><span class="tag trd">Redis</span></td><td>memos · summary · author_history · prev_user_questions</td></tr>
+        <tr><td><span class="tag tllm">페르소나</span></td><td>personas.py: 백야/차로운/한여름/김도현</td></tr>
+        <tr><td><span class="tag tloc">state</span></td><td>world, dbCharacters (진입 시 로드, 이후 재사용)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- TAB 3 -->
+<div class="panel" id="p2">
+  <div class="card" style="font-size:12.5px;margin-bottom:0.75rem">
+    <span class="ab ab-b">POST</span><code>/chats/{chatId}/author/taste-recommend</code><br>
+    <span style="color:#6b6a65">payload: user_id, author_id (현재 선택된 작가)</span>
+  </div>
+
+  <div class="sec-label">백엔드 내부 처리 단계</div>
+  <div class="card">
+    <div class="step"><div class="sn sn-p">1</div><div class="st">취향 프로파일 조회<div class="ss">DB: UserTasteProfile → 선호 장르, 선호 키워드<br>없으면 "취향 정보 없음 (마이페이지 설정 필요)" 메시지</div></div></div>
+    <div class="step"><div class="sn sn-p">2</div><div class="st">소설 컨텍스트 조회<div class="ss">DB: World · Characters · story_summary<br>Redis: key_summary 최신이면 우선 사용 (앞 400자)</div></div></div>
+    <div class="step"><div class="sn sn-p">3</div><div class="st">최근 대화 10턴 조회<div class="ss">Redis: key_history reversed → "주인공"(user) / "AI"(character) 레이블 포맷</div></div></div>
+    <div class="step"><div class="sn sn-p">4</div><div class="st">작가 페르소나 조회<div class="ss">personas.py: _AUTHOR_PERSONALITY[author_id]<br>taste_type_labels: 추천 방향 선택지 목록</div></div></div>
+    <div class="step"><div class="sn sn-p">5</div><div class="st">프롬프트 조립 → LLM 호출<div class="ss">TASTE_RECOMMEND_SYSTEM.format(taste_section, novel_section, dialogue_section, author_section)</div></div></div>
+    <div class="step"><div class="sn sn-p">6</div><div class="st">JSON 출력<div class="ss">recommendations: [ { type, narration, dialogue, reason } × 3 ]</div></div></div>
+  </div>
+
+  <div class="sec-label">취향 프로파일 없을 때 — 입력 패널</div>
+  <div class="card" style="font-size:12.5px">
+    <code>tasteWorks</code> 입력 (엔터) → <code>handleTasteInputKeyDown()</code><br>
+    <span class="ab ab-b">POST</span><code>/taste/analyze</code><br>
+    <span style="color:#6b6a65">LLM이 작품 목록 분석 → 선호 장르·키워드 추출 → DB: UserTasteProfile upsert → tasteProfile 상태 갱신</span>
+  </div>
+
+  <div class="sec-label">참고 데이터 요약</div>
+  <div class="card" style="padding:0.75rem">
+    <table class="dt">
+      <thead><tr><th>데이터</th><th>출처</th><th>용도</th></tr></thead>
+      <tbody>
+        <tr><td>선호 장르/키워드</td><td><span class="tag tdb">DB</span> UserTasteProfile</td><td>취향 반영</td></tr>
+        <tr><td>세계관 정보</td><td><span class="tag tdb">DB</span> World</td><td>소설 컨텍스트</td></tr>
+        <tr><td>등장인물</td><td><span class="tag tdb">DB</span> Character</td><td>소설 컨텍스트</td></tr>
+        <tr><td>줄거리 요약</td><td><span class="tag trd">Redis</span> / <span class="tag tdb">DB</span></td><td>현재 상황 파악</td></tr>
+        <tr><td>최근 대화 10턴</td><td><span class="tag trd">Redis</span> history</td><td>직전 문장 흐름</td></tr>
+        <tr><td>작가 페르소나</td><td><span class="tag tllm">personas.py</span></td><td>추천 방향 선택지</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- TAB 4 -->
+<div class="panel" id="p3">
+  <div class="sec-label">트리거 방식</div>
+  <div class="g3" style="margin-bottom:0.75rem">
+    <div class="trig"><div class="tl">수동</div><div class="td2">오른쪽 패널 "피드백 받기" 버튼 클릭</div></div>
+    <div class="trig"><div class="tl">자동</div><div class="td2">자동 피드백 ON + AI 응답 종료 2초 후</div></div>
+    <div class="trig"><div class="tl">에디터 선택 구간</div><div class="td2">텍스트 드래그 후 "선택 구간 피드백" 버튼</div></div>
+  </div>
+
+  <div class="card">
+    <div class="flow">handleFeedback() / triggerFeedback(text)
+  └─ handleSendAuthorMessage(text, { mode: 'feedback', hideUser: true })
+       └─ POST /chats/{chatId}/author/message
+            payload: { content: 사용자 문장, author_id, mode: 'feedback' }</div>
+    <div style="font-size:12px;color:#6b6a65">
+      <strong style="color:#1a1a18">chat 모드</strong> — 마지막 사용자 메시지 전체 <code>lastUserMsg.text</code> &nbsp;|&nbsp;
+      <strong style="color:#1a1a18">editor 모드</strong> — 선택 구간 or 마지막 800자 <code>getEditorFeedbackText()</code>
+    </div>
+  </div>
+
+  <div class="note">피드백 모드는 RAG · 메모 · 요약 없이 세계관 + 작가 렌즈 + 사용자 문장만으로 판단합니다. 일반 채팅 모드와 달리 프롬프트 스택이 의도적으로 짧습니다.</div>
+
+  <div class="sec-label">백엔드 /author/message (mode=feedback)</div>
+  <div class="card">
+    <div class="step"><div class="sn sn-p">↓</div><div class="st"><code>build_feedback_prompt(persona_id, world_context)</code><div class="ss">DB: World (세계관 문자열만, 등장인물·요약·메모 없음)<br>작가 페르소나 · feedback_lens · 출력 형식 규칙 (번호목록·볼드·경어·칭찬 금지)</div></div></div>
+    <div class="step"><div class="sn sn-p">↓</div><div class="st">LLM 호출 → 피드백 텍스트 생성<div class="ss"><code>[SUGGEST:YES/NO]</code> 마커 파싱 — YES이면 추천 문장 자동 생성 요청</div></div></div>
+    <div class="step"><div class="sn sn-p">↓</div><div class="st"><code>Redis: append_author_history()</code> — 패널 내 대화 기록 저장</div></div>
+  </div>
+
+  <div class="sec-label">추천 문장 자동 생성 (피드백 직후)</div>
+  <div class="card">
+    <div class="step"><div class="sn sn-b">①</div><div class="st"><code>fetchRecommendation(aiMsgId, authorCharacterId, userText, aiFeedback)</code></div></div>
+    <div class="step"><div class="sn sn-b">②</div><div class="st"><span class="ab ab-b">POST</span><code>/chats/{chatId}/author/rewrite</code><div class="ss">payload: original, feedback, author_id</div></div></div>
+    <div class="flow" style="margin:8px 0">build_rewrite_prompt() 참고 데이터:
+  original · feedback
+  author.novel_style · author.rewrite_rule · load_persona_rule()
+  DB: World · story_summary
+  Redis: memos · author_history (최근 4턴)
+  RAG: memory.retrieve_relevant(original)</div>
+    <div class="note" style="margin:0">절대 규칙: 원문 단어 그대로 반복 금지 · 원문 표현 순서 그대로 따르기 금지</div>
+  </div>
+
+  <div class="sec-label">선택지 카드 흐름</div>
+  <div class="card" style="font-size:12.5px">
+    응답에 <code>**1. 제목** / **2. 제목**</code> 형식 → <code>parseNumberedChoices()</code> 파싱<br>
+    카드 선택 → <code>handleChoiceSelect(msg, choice)</code> → <code>fetchRecommendation()</code> 재호출
+  </div>
+
+  <div class="sec-label">참고 데이터 요약</div>
+  <div class="card" style="padding:0.75rem">
+    <table class="dt">
+      <thead><tr><th>단계</th><th>데이터</th><th>출처</th></tr></thead>
+      <tbody>
+        <tr><td>피드백 생성</td><td>사용자 원문 · 세계관</td><td>채팅/에디터, <span class="tag tdb">DB</span> World</td></tr>
+        <tr><td>피드백 생성</td><td>작가 렌즈·페르소나</td><td><span class="tag tllm">personas.py</span></td></tr>
+        <tr><td>추천 문장</td><td>원문 + 피드백 · 세계관 + 줄거리</td><td>이전 단계, <span class="tag tdb">DB</span></td></tr>
+        <tr><td>추천 문장</td><td>작가 메모 · 최근 4턴</td><td><span class="tag trd">Redis</span> memos · author_history</td></tr>
+        <tr><td>추천 문장</td><td>관련 과거 사건</td><td><span class="tag trag">RAG</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- TAB 5 -->
+<div class="panel" id="p4">
+  <div class="sec-label">트리거</div>
+  <div class="card" style="font-size:12.5px">
+    실시간 교정 ON · editor 모드에만 적용 (chat 모드 대상 없음)<br>
+    본문 변경 → 2.5초 debounce → 마지막 문단 교정<br>
+    <div style="margin-top:8px"><span class="ab ab-b">POST</span><code>/chats/{chatId}/proofread</code><span style="color:#6b6a65;font-size:11.5px;margin-left:6px">payload: text, character_id</span></div>
+  </div>
+
+  <div class="sec-label">백엔드 /proofread 처리 단계</div>
+  <div class="card">
+    <div class="step"><div class="sn sn-t">1</div><div class="st">보호 용어 수집<div class="ss">DB: World.glossary + Character.name<br>최초 요청 시 glossary=null → LLM으로 세계관에서 고유명사 자동 추출 → DB 캐시</div></div></div>
+    <div class="step"><div class="sn sn-t">2</div><div class="st">맞춤법 검사<div class="ss"><code>services.proofread</code> (F-QC-02, 네이버 맞춤법 기반)<br>보호 용어 제외 후 diff 검출 → errors: [{original, corrected, type}]</div></div></div>
+    <div class="step"><div class="sn sn-t">3</div><div class="st">개인 오답 누적<div class="ss">DB: User.error_profile 갱신 — 2회 이상 틀린 항목 → frequent=True</div></div></div>
+    <div class="step"><div class="sn sn-t">4</div><div class="st">작가 톤 메모 생성 (오류 있을 때만)<div class="ss">LLM 호출 (경량) → 작가 페르소나 말투로 교정 한 줄 메모<br>'빨간펜 선생님'이 아닌 '협업 작가의 여백 메모' 톤</div></div></div>
+    <div style="font-size:12px;color:#6b6a65;margin-top:4px">응답: <code>{ errors: [...], memo: "한 줄 메모", count: N, checker_ok: bool }</code></div>
+  </div>
+
+  <div class="sec-label">교정 제안 처리 (프론트)</div>
+  <div class="g2">
+    <div class="card" style="font-size:12.5px">
+      <div class="mini-lbl">수정</div>
+      <code>onApplyCorrection()</code><br>
+      <span style="color:#6b6a65">본문 내 해당 단어 치환</span>
+    </div>
+    <div class="card" style="font-size:12.5px">
+      <div class="mini-lbl">넘기기</div>
+      <code>addGlossaryTerm(chatId, original)</code><br>
+      <span class="ab ab-b">POST</span><code>/glossary</code><br>
+      <span style="color:#6b6a65">DB: World.glossary 영구 추가</span>
+    </div>
+  </div>
+
+  <div class="sec-label">능동 경고 (하루 1회)</div>
+  <div class="card">
+    <div class="step"><div class="sn sn-b">①</div><div class="st"><span class="ab ab-g">GET</span><code>/chats/{chatId}/error-warmup?limit=3</code><div class="ss">DB: User.error_profile → 2회 이상 틀린 항목 상위 3개 (LLM 미사용)</div></div></div>
+    <div class="step"><div class="sn sn-o">②</div><div class="st">닫으면 <span class="tag tloc">localStorage</span> <code>warmup_off_{chatId}_{오늘날짜} = '1'</code></div></div>
+  </div>
+
+  <div class="sec-label">참고 데이터 요약</div>
+  <div class="card" style="padding:0.75rem">
+    <table class="dt">
+      <thead><tr><th>데이터</th><th>출처</th><th>용도</th></tr></thead>
+      <tbody>
+        <tr><td>검사 대상 텍스트</td><td>에디터 마지막 문단</td><td>교정 입력</td></tr>
+        <tr><td>보호 용어</td><td><span class="tag tdb">DB</span> World.glossary + Character.name</td><td>고유명사 오검출 방지</td></tr>
+        <tr><td>세계관 텍스트</td><td><span class="tag tdb">DB</span> World</td><td>glossary 자동 추출 원본</td></tr>
+        <tr><td>개인 오답 이력</td><td><span class="tag tdb">DB</span> User.error_profile</td><td>frequent 플래그, 능동 경고</td></tr>
+        <tr><td>작가 페르소나 톤</td><td><span class="tag tllm">proofread.py</span></td><td>메모 말투</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</div>
+<script>
+function switchTab(i){
+  document.querySelectorAll('.tab-btn').forEach((b,j)=>b.classList.toggle('active',i===j));
+  document.querySelectorAll('.panel').forEach((p,j)=>p.classList.toggle('active',i===j));
+}
+</script>
+</body>
+</html>

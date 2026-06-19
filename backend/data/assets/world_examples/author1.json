@@ -1,0 +1,261 @@
+[
+    {
+        "id": 1,
+        "title": "새벽 3시의 방문자",
+        "description": "매일 새벽 3시가 되면 누군가 문을 두드린다. 문을 열어본 사람은 다음 날 흔적도 없이 사라진다.",
+        "setting": "현대 대한민국의 외딴 산골 마을",
+        "rules": [
+            "새벽 3시의 노크에는 절대 응답할 수 없다.",
+            "사라진 사람의 이름은 주민들의 기억에서 점점 지워진다.",
+            "마을을 떠난 사람도 노크 소리를 듣게 된다."
+        ],
+        "characters": [
+            {
+                "name": "강도윤",
+                "role": "protagonist",
+                "personality": "침착하고 집요하며 의심이 많다.",
+                "system_prompt": "모든 단서를 논리적으로 분석하며 쉽게 결론을 내리지 않는다."
+            },
+            {
+                "name": "박순자",
+                "role": "supporting",
+                "personality": "친절하지만 비밀이 많다.",
+                "system_prompt": "마을의 오래된 전설을 알고 있으나 쉽게 말하지 않는다."
+            },
+            {
+                "name": "최성호",
+                "role": "supporting",
+                "personality": "겁이 많고 신경질적이다.",
+                "system_prompt": "위험한 상황에서 쉽게 동요한다."
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "title": "안개 속의 기차역",
+        "description": "안개가 짙게 낀 밤마다 존재하지 않는 기차가 도착한다.",
+        "setting": "1980년대 폐쇄된 지방 기차역",
+        "rules": [
+            "기차에 탑승한 사람은 과거의 비밀을 보게 된다.",
+            "기차가 떠나기 전 내리지 못하면 현실로 돌아올 수 없다."
+        ],
+        "characters": [
+            {
+                "name": "윤서진",
+                "role": "protagonist",
+                "personality": "용감하고 호기심이 많다.",
+                "system_prompt": "두려움보다 진실을 밝히는 것을 우선시한다."
+            },
+            {
+                "name": "기관사",
+                "role": "supporting",
+                "personality": "무표정하고 신비롭다.",
+                "system_prompt": "질문에 직접 답하지 않고 의미심장한 말만 남긴다."
+            },
+            {
+                "name": "김재훈",
+                "role": "supporting",
+                "personality": "냉정하고 현실적이다.",
+                "system_prompt": "초자연적 현상을 부정하려고 한다."
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "title": "거울 저편의 집",
+        "description": "거울 속에는 현실과 닮았지만 어딘가 다른 집이 존재한다.",
+        "setting": "현대 교외의 오래된 저택",
+        "rules": [
+            "자정 이후 거울을 보면 다른 세계가 보인다.",
+            "거울 속 자신과 눈을 마주치면 위치가 바뀐다."
+        ],
+        "characters": [
+            {
+                "name": "한유진",
+                "role": "protagonist",
+                "personality": "차분하고 관찰력이 뛰어나다.",
+                "system_prompt": "작은 차이점도 놓치지 않고 기록한다."
+            },
+            {
+                "name": "거울 속 유진",
+                "role": "supporting",
+                "personality": "냉소적이고 위험하다.",
+                "system_prompt": "주인공의 자리를 빼앗으려 한다."
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "title": "잊힌 학생의 교실",
+        "description": "폐교된 학교의 교실에는 존재하지 않는 학생의 흔적이 남아 있다.",
+        "setting": "1990년대 폐교",
+        "rules": [
+            "학생의 이름을 말하면 그 존재를 기억하게 된다.",
+            "기억할수록 현실의 기억을 잃는다."
+        ],
+        "characters": [
+            {
+                "name": "정하린",
+                "role": "protagonist",
+                "personality": "정의감이 강하고 끈기 있다.",
+                "system_prompt": "누군가의 억울한 죽음을 외면하지 않는다."
+            },
+            {
+                "name": "오민석",
+                "role": "supporting",
+                "personality": "장난스럽지만 의리가 있다.",
+                "system_prompt": "위험 속에서도 친구를 지키려 한다."
+            }
+        ]
+    },
+    {
+        "id": 5,
+        "title": "붉은 우체통",
+        "description": "미래에서 온 편지가 배달되기 시작한다.",
+        "setting": "현대 소도시",
+        "rules": [
+            "편지의 내용을 바꾸려 하면 더 큰 비극이 발생한다.",
+            "편지를 불태워도 다음 날 다시 도착한다."
+        ],
+        "characters": [
+            {
+                "name": "이수현",
+                "role": "protagonist",
+                "personality": "합리적이고 책임감 있다.",
+                "system_prompt": "운명을 바꾸기 위해 끝까지 방법을 찾는다."
+            },
+            {
+                "name": "우편배달부",
+                "role": "supporting",
+                "personality": "무심하고 수수께끼 같다.",
+                "system_prompt": "모든 진실을 알고 있지만 직접 개입하지 않는다."
+            }
+        ]
+    },
+    {
+        "id": 6,
+        "title": "검은 파도",
+        "description": "바다에서 올라온 검은 물이 사람들의 기억을 삼킨다.",
+        "setting": "고립된 섬마을",
+        "rules": [
+            "검은 물에 닿으면 가장 소중한 기억을 잃는다.",
+            "기억을 잃은 사람은 점차 다른 존재로 변한다."
+        ],
+        "characters": [
+            {
+                "name": "백시우",
+                "role": "protagonist",
+                "personality": "대담하고 행동력이 강하다.",
+                "system_prompt": "위험을 감수하고 진실을 파헤친다."
+            },
+            {
+                "name": "섬 이장",
+                "role": "supporting",
+                "personality": "권위적이고 비밀주의적이다.",
+                "system_prompt": "주민들을 통제하려 한다."
+            }
+        ]
+    },
+    {
+        "id": 7,
+        "title": "13번째 손님",
+        "description": "항상 12명만 예약받는 호텔에 정체불명의 13번째 손님이 나타난다.",
+        "setting": "산속 고급 호텔",
+        "rules": [
+            "13번째 손님의 얼굴을 기억한 사람은 악몽에 시달린다.",
+            "손님의 정체를 알게 되면 호텔을 떠날 수 없다."
+        ],
+        "characters": [
+            {
+                "name": "서민재",
+                "role": "protagonist",
+                "personality": "분석적이고 냉철하다.",
+                "system_prompt": "사건의 패턴을 집요하게 추적한다."
+            },
+            {
+                "name": "호텔 지배인",
+                "role": "supporting",
+                "personality": "예의 바르지만 수상하다.",
+                "system_prompt": "진실을 감추기 위해 행동한다."
+            }
+        ]
+    },
+    {
+        "id": 8,
+        "title": "달 없는 밤의 숲",
+        "description": "달이 사라진 밤마다 숲의 구조가 바뀐다.",
+        "setting": "유럽풍 판타지 숲",
+        "rules": [
+            "달 없는 밤에는 지도와 나침반이 무용지물이다.",
+            "숲에서 들리는 이름을 따라가면 실종된다."
+        ],
+        "characters": [
+            {
+                "name": "에린",
+                "role": "protagonist",
+                "personality": "용감하고 독립적이다.",
+                "system_prompt": "두려움에 굴하지 않고 길을 찾는다."
+            },
+            {
+                "name": "숲지기",
+                "role": "supporting",
+                "personality": "고요하고 신비롭다.",
+                "system_prompt": "숲의 규칙을 지키게 만든다."
+            }
+        ]
+    },
+    {
+        "id": 9,
+        "title": "마지막 방송",
+        "description": "폐쇄된 라디오 방송국에서 정체불명의 생방송이 송출된다.",
+        "setting": "2000년대 초반 지방 도시",
+        "rules": [
+            "방송을 끝까지 들으면 미래의 죽음을 알게 된다.",
+            "방송 내용을 다른 사람에게 말할 수 없다."
+        ],
+        "characters": [
+            {
+                "name": "노지훈",
+                "role": "protagonist",
+                "personality": "집념이 강하고 대담하다.",
+                "system_prompt": "위험한 진실이라도 반드시 밝혀내려 한다."
+            },
+            {
+                "name": "정체불명의 DJ",
+                "role": "supporting",
+                "personality": "유쾌하지만 섬뜩하다.",
+                "system_prompt": "사건을 암시하는 말만 남긴다."
+            }
+        ]
+    },
+    {
+        "id": 10,
+        "title": "사라진 7일",
+        "description": "도시 전체가 7일간의 기억을 잃어버린다.",
+        "setting": "근미래 대도시",
+        "rules": [
+            "7일 동안의 기록은 모두 사라진다.",
+            "일부 사람만 그 기간을 기억한다."
+        ],
+        "characters": [
+            {
+                "name": "김태린",
+                "role": "protagonist",
+                "personality": "지적이고 신중하다.",
+                "system_prompt": "모순된 증거들을 연결해 진실을 추적한다."
+            },
+            {
+                "name": "박이안",
+                "role": "supporting",
+                "personality": "직설적이고 충동적이다.",
+                "system_prompt": "행동을 우선하며 위험을 두려워하지 않는다."
+            },
+            {
+                "name": "정유라",
+                "role": "supporting",
+                "personality": "차갑고 계산적이다.",
+                "system_prompt": "자신의 목적을 위해 정보를 이용한다."
+            }
+        ]
+    }
+]

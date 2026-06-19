@@ -1,0 +1,381 @@
+/* src/pages/main/main.css */
+.app-container {
+    display: block;
+    width: 100%;
+}
+
+.header-auth {
+    position: absolute;
+    right: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+/* 타이틀 영역 */
+.title-area {
+    width: 100%;
+    text-align: center;
+    margin-top: 26px;      /* NodeVelture 헤더와 간격 확보 */
+    margin-bottom: 30px;
+}
+
+.main-heading {
+    font-size: 24px;
+    color: var(--text-main);
+    font-weight: 700;
+    margin: 10px 0 6px 0;
+}
+
+.main-heading .highlight {
+    color: var(--theme-color-sub);
+}
+
+.desc-text {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+/* 작가 카드 섹션 & 그리드 */
+.top-section {
+    width: 100%;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    overflow-x: hidden;
+    overflow-y: auto;
+    margin-bottom: 40px;
+    padding: 10px 0;
+}
+
+.author-section {
+    margin-bottom: 10px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    width: 100%;
+    box-sizing: border-box;
+    justify-content: center;
+    justify-items: center;
+}
+
+/* 카드 개별 스타일 */
+.card {
+    width: 100%;
+    max-width: 400px;
+    height: fit-content;
+    padding: 16px 12px;
+    box-sizing: border-box;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    cursor: pointer;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.14);
+    background-color: var(--card-main);
+    transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease, max-width 0.3s ease;
+}
+
+.card:hover {
+    transform: scale(1.1);
+}
+
+/* 라이트 테마(한여름·김도현): 카드가 흰색으로 뜨지 않게 테마색을 살짝 섞은 배경·테두리로 */
+:root[data-author="author3"] .card,
+:root[data-author="author4"] .card {
+    background-color: color-mix(in srgb, var(--theme-color) 14%, var(--card-main));
+    border-color: color-mix(in srgb, var(--theme-color) 22%, transparent);
+}
+
+.avatar-wrapper {
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #2C2C2E;
+    margin-bottom: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    aspect-ratio: 3 / 4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+@media (orientation: portrait) {
+    .avatar-wrapper {
+        aspect-ratio: 1 / 1;
+    }
+}
+
+.card-avatar-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    width: 100%;
+}
+
+.card-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+.card-genre {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+}
+
+.card-quote {
+    margin: 0;
+    font-size: 11px;
+    color: var(--text-muted);
+    line-height: 1.4;
+    font-style: italic;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* 하단 네비게이션 */
+.bottom-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: auto;
+    margin-bottom: 10px;
+}
+
+/* 하단 스타일 */
+.speech-text {
+    padding: 18px;
+    color: var(--text-main);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    font-size: 15px;
+    font-weight: 600;
+    background-color: transparent;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    letter-spacing: 0.5px;
+}
+
+.main-author-panel-wrapper {
+    margin-left: auto;
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* ── 토글 버튼 ── */
+.main-panel-toggle-btn {
+    position: absolute;
+    right: 16px;
+    padding: 6px 20px;
+    height: 32px;
+    border-radius: 20px;
+    border: 1.5px solid transparent;
+    background: transparent;
+    color: var(--theme-color);
+    font-size: 17px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.2s, background 0.2s;
+}
+
+.main-panel-toggle-btn:hover {
+    border-color: color-mix(in srgb, var(--theme-color) 55%, transparent);
+    background: color-mix(in srgb, var(--theme-color) 12%, transparent);
+}
+
+.main-author-panel-slide {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 400px;
+    height: 100vh;
+    overflow: hidden;
+    background: color-mix(in srgb, var(--theme-color) 10%, var(--card-main));
+    border-left: 1.5px solid color-mix(in srgb, var(--theme-color) 30%, transparent);
+    transform: translateX(100%);
+    transition: transform 0.25s ease;
+    z-index: 100;
+}
+
+.main-author-panel-slide--open {
+    transform: translateX(0);
+}
+
+.main-panel-close-btn {
+    align-self: flex-end;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 16px;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: color 0.15s, background 0.15s;
+}
+
+.main-panel-close-btn:hover {
+    color: var(--theme-color);
+    background: color-mix(in srgb, var(--theme-color) 12%, transparent);
+}
+
+/* 라이트 테마(한여름·김도현) */
+:root[data-author="author3"] .main-author-panel-slide,
+:root[data-author="author4"] .main-author-panel-slide {
+    background: color-mix(in srgb, var(--theme-color) 6%, var(--card-main));
+    border-left: 1px solid color-mix(in srgb, var(--theme-color) 22%, transparent);
+}
+
+.main-author-panel {
+    width: 100%;
+    height: 100%;
+    padding: 16px;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* 사이드바 프로필 카드 (마이페이지 미니 프로필과 동일 톤) */
+.main-profile-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 0 18px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid color-mix(in srgb, var(--theme-color) 28%, transparent);
+}
+
+.main-profile-avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: color-mix(in srgb, var(--theme-color) 30%, var(--card-main));
+    color: var(--text-main);
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.main-profile-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+.main-profile-stats {
+    display: flex;
+    gap: 12px;
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+/* 로그아웃 버튼: 오른쪽 패널 맨 아래로 밀착 */
+.main-logout-btn {
+    margin-top: auto;
+}
+
+/* 말투 설정 팝업 */
+.popup-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 20px;
+}
+
+.popup-card {
+    background-color: var(--card-main, #1c1c1e);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 28px 24px;
+    max-width: 340px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.popup-emoji {
+    font-size: 36px;
+    margin: 0;
+}
+
+.popup-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text-main, #fff);
+    margin: 0;
+}
+
+.popup-desc {
+    font-size: 13px;
+    color: var(--text-muted, #aaa);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.popup-actions {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    margin-top: 8px;
+}
+
+.popup-btn-secondary {
+    flex: 1;
+    padding: 12px;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    color: var(--text-muted, #aaa);
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.popup-btn-primary {
+    flex: 2;
+    padding: 12px;
+    background-color: var(--theme-color, #555);
+    border: none;
+    border-radius: 12px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.popup-btn-primary:hover {
+    opacity: 0.85;
+}

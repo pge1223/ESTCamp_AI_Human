@@ -1,0 +1,131 @@
+/* src/index.css */
+:root {
+  --theme-color: #8B6FAD;
+  --theme-color-sub: #C9B6E4;
+  --header-bg: rgba(24, 20, 32, 0.82);
+  --bg-main: linear-gradient(180deg, #0E0B14 0%, #191225 100%);
+  --text-main: #F7F3FF;
+  --text-muted: #A9A0B5;
+  --card-main: #18131F;
+  --scrollbar-bar: #423854;
+  --scrollbar-bg: #120E1A;
+}
+
+:root[data-author="author2"] {
+  --theme-color: #5F7898;
+  --theme-color-sub: #A9BCD6;
+  --header-bg: rgba(18, 25, 36, 0.82);
+  --bg-main: linear-gradient(180deg, #09101A 0%, #121C2B 100%);
+  --text-main: #F3F7FF;
+  --text-muted: #95A3B6;
+  --card-main: #1A2636;
+  --scrollbar-bar: #33445C;
+  --scrollbar-bg: #0E1624;
+}
+
+:root[data-author="author3"] {
+  --theme-color: #C98FA4;
+  --theme-color-sub: #E8B9C9;
+  --header-bg: rgba(255, 240, 246, 0.85);
+  --bg-main: linear-gradient(180deg, #FFF7FA 0%, #F8E4EB 100%);
+  --text-main: #241820;
+  --text-muted: #9E7F8B;
+  --card-main: #FFFDFE;
+  --scrollbar-bar: #E3CDD5;
+  --scrollbar-bg: #FDF1F5;
+}
+
+:root[data-author="author4"] {
+  --theme-color: #C99A62;
+  --theme-color-sub: #E6C79D;
+  --header-bg: rgba(255, 247, 236, 0.85);
+  --bg-main: linear-gradient(180deg, #FFF8EF 0%, #F3E2CA 100%);
+  --text-main: #241B12;
+  --text-muted: #9B856C;
+  --card-main: #FFFDF9;
+  --scrollbar-bar: #DECDB8;
+  --scrollbar-bg: #FAF2E6;
+}
+
+/* 전체 브라우저 기본 마진 초기화 및 부드러운 다크 그라데이션 적용 */
+body,
+html,
+#root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+  background: var(--bg-main);
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-bar) var(--scrollbar-bg);
+}
+
+/* 상단 헤더 */
+.header {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--header-bg);
+  gap: 16px;
+  border-radius: 24px;
+  box-sizing: border-box;
+  backdrop-filter: blur(10px);
+  border: 1px solid;
+  border-color: var(--theme-color);
+}
+
+.header-image {
+  width: 64px;
+  height: 64px;
+  border-radius: 20px;
+  object-fit: cover;
+}
+
+.logo {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-align: center;
+  color: var(--text-main);
+}
+
+.app-container {
+  width: 100%;
+  min-height: 100vh;
+}
+
+.app-wrapper {
+  max-width: 100%;
+  width: 100%;
+  min-height: 100vh;
+  padding: 40px 24px 20px 24px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.btn {
+  padding: 8px;
+  color: var(--text-main);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  font-size: 15px;
+  font-weight: 600;
+  background-color: transparent;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: color-mix(in srgb, var(--theme-color) 18%, transparent);
+  border-color: var(--theme-color);
+}
+
+.btn--secondary {
+  background-color: color-mix(in srgb, var(--theme-color) 10%, transparent);
+  border-color: color-mix(in srgb, var(--theme-color) 40%, transparent);
+}

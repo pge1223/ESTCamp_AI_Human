@@ -1,0 +1,63 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+*.egg-info/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# 모든 하위 폴더의 실제 .env 파일은 Git 추적에서 제외
+*.env
+backend/.env
+frontend/.env
+
+# Node
+node_modules/
+dist/
+.next/
+
+# Model checkpoints
+model/checkpoints/
+*.bin
+*.safetensors
+*.pt
+*.pth
+
+# Data (원본 데이터는 별도 보관)
+data/raw/
+data/processed/
+
+# DB
+*.db
+*.sqlite3
+
+# Personal docs (local only)
+frontend/pge_doc/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs and local files
+*.log
+dist-ssr/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Eval 스크립트 산출물 (로컬 실행 결과, 추적 안 함)
+backend/evidence_report_*.json
+
+# tts 서버
+frontend/.vercel

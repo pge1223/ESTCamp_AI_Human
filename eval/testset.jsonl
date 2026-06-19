@@ -1,0 +1,20 @@
+{"id": 1, "category": "일상", "character_id": "baekya", "input": "오늘 날씨가 정말 좋네요.", "world_context": ""}
+{"id": 2, "category": "일상", "character_id": "baekya", "input": "배가 좀 고픈 것 같아요.", "world_context": ""}
+{"id": 3, "category": "감정", "character_id": "charoun", "input": "오늘 하루가 너무 힘들었어요.", "world_context": ""}
+{"id": 4, "category": "감정", "character_id": "charoun", "input": "당신 옆에 있으면 마음이 편해요.", "world_context": ""}
+{"id": 5, "category": "전개", "character_id": "hanyeoreum", "input": "저 사람이 우리를 따라오는 것 같아요.", "world_context": ""}
+{"id": 6, "category": "전개", "character_id": "hanyeoreum", "input": "이 편지를 읽어봐요.", "world_context": ""}
+{"id": 7, "category": "갈등", "character_id": "kimdohyeon", "input": "왜 나한테 그런 말을 했어요?", "world_context": ""}
+{"id": 8, "category": "갈등", "character_id": "kimdohyeon", "input": "당신을 믿었는데 실망했어요.", "world_context": ""}
+{"id": 9, "category": "anti_mirror", "character_id": "baekya", "input": "\"안녕하세요\" 하고 인사했다.", "world_context": ""}
+{"id": 10, "category": "anti_mirror", "character_id": "charoun", "input": "손을 내밀었다.", "world_context": ""}
+{"id": 11, "category": "anti_mirror", "character_id": "hanyeoreum", "input": "\"같이 가요\" 라고 말했다.", "world_context": ""}
+{"id": 12, "category": "장면묘사", "character_id": "baekya", "input": "창문 밖을 바라봤다.", "world_context": ""}
+{"id": 13, "category": "장면묘사", "character_id": "kimdohyeon", "input": "낡은 사진을 발견했다.", "world_context": ""}
+{"id": 14, "category": "장면묘사", "character_id": "charoun", "input": "조용한 카페에 앉아 있었다.", "world_context": ""}
+{"id": 15, "category": "긴장", "character_id": "hanyeoreum", "input": "갑자기 불이 꺼졌다.", "world_context": ""}
+{"id": 16, "category": "긴장", "character_id": "kimdohyeon", "input": "발소리가 점점 가까워지고 있어요.", "world_context": ""}
+{"id": 17, "category": "로맨스", "character_id": "baekya", "input": "\"좋아해요\" 라고 속삭였다.", "world_context": ""}
+{"id": 18, "category": "로맨스", "character_id": "charoun", "input": "손이 살짝 닿았다.", "world_context": ""}
+{"id": 19, "category": "위로", "character_id": "hanyeoreum", "input": "울고 싶은데 눈물이 안 나와요.", "world_context": ""}
+{"id": 20, "category": "위로", "character_id": "kimdohyeon", "input": "혼자인 것 같아 무서워요.", "world_context": ""}

@@ -1,0 +1,328 @@
+.voice-container {
+  min-height: 100dvh;
+  background-color: var(--bg-main, #111);
+  display: flex;
+  justify-content: center;
+  padding: 24px 16px 48px;
+  box-sizing: border-box;
+}
+
+.voice-wrapper {
+  width: 100%;
+  max-width: 560px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.voice-back {
+  background: none;
+  border: none;
+  color: var(--text-muted, #aaa);
+  font-size: 14px;
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+}
+
+.voice-header {
+  text-align: center;
+}
+
+.voice-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-main, #fff);
+  margin: 0 0 8px;
+}
+
+.voice-subtitle {
+  font-size: 14px;
+  color: var(--text-muted, #aaa);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.voice-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.voice-section-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-main, #fff);
+  margin: 0;
+}
+
+.voice-section-desc {
+  font-size: 12px;
+  color: var(--text-muted, #aaa);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.voice-optional {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-muted, #888);
+}
+
+.voice-question-block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.voice-question-label {
+  font-size: 13px;
+  color: var(--text-muted, #ccc);
+  line-height: 1.5;
+}
+
+.voice-textarea {
+  width: 100%;
+  background-color: var(--card-main, #1c1c1e);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  color: var(--text-main, #fff);
+  font-size: 14px;
+  padding: 12px 14px;
+  resize: vertical;
+  box-sizing: border-box;
+  font-family: inherit;
+  line-height: 1.6;
+  transition: border-color 0.2s;
+}
+
+.voice-textarea:focus {
+  outline: none;
+  border-color: var(--theme-color, #888);
+}
+
+.voice-textarea::placeholder {
+  color: var(--text-muted, #666);
+}
+
+.voice-textarea-tall {
+  min-height: 100px;
+}
+
+.voice-error {
+  font-size: 13px;
+  color: #ff6b6b;
+  margin: 0;
+  text-align: center;
+}
+
+.voice-btn-primary {
+  width: 100%;
+  padding: 16px;
+  background-color: var(--theme-color, #555);
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.voice-btn-primary:hover:not(:disabled) {
+  opacity: 0.85;
+}
+
+.voice-btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.voice-btn-secondary {
+  width: 100%;
+  padding: 12px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  color: var(--text-muted, #aaa);
+  font-size: 14px;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+/* 완료 화면 */
+.voice-done {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  min-height: 60dvh;
+  text-align: center;
+}
+
+.voice-done-emoji {
+  font-size: 48px;
+  margin: 0;
+}
+
+.voice-done-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-main, #fff);
+  margin: 0;
+}
+
+.voice-done-desc {
+  font-size: 14px;
+  color: var(--text-muted, #aaa);
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* 안내 강조 */
+.voice-notice {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 11px;
+  color: var(--text-muted, #888);
+}
+
+/* 배지 */
+.voice-badge {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--theme-color, #aaa);
+  background-color: color-mix(in srgb, var(--theme-color, #555) 15%, transparent);
+  border-radius: 6px;
+  padding: 2px 8px;
+  margin-left: 8px;
+}
+
+.voice-badge-sub {
+  color: #a0a0c0;
+  background-color: rgba(160, 160, 192, 0.15);
+}
+
+.voice-badge-genre {
+  color: #c0a060;
+  background-color: rgba(192, 160, 96, 0.15);
+}
+
+/* 질문 번호 + 감정 태그 */
+.voice-question-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.08);
+  font-size: 11px;
+  font-weight: 600;
+  margin-right: 6px;
+  flex-shrink: 0;
+}
+
+.voice-emotion-tag {
+  display: inline-block;
+  font-size: 11px;
+  color: var(--theme-color, #aaa);
+  border: 1px solid color-mix(in srgb, var(--theme-color, #555) 40%, transparent);
+  border-radius: 4px;
+  padding: 1px 6px;
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+/* 장르 선택 칩 */
+.voice-genre-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.voice-genre-chip {
+  padding: 8px 16px;
+  background: color-mix(in srgb, var(--theme-color, #c08090) 8%, transparent);
+  border: 1.5px solid color-mix(in srgb, var(--theme-color, #c08090) 50%, transparent);
+  border-radius: 20px;
+  color: var(--text-muted, #bbb);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 500;
+}
+
+.voice-genre-chip:hover {
+  border-color: var(--theme-color, #c08090);
+  color: var(--text-main, #fff);
+}
+
+.voice-genre-chip.active {
+  background-color: color-mix(in srgb, var(--theme-color, #555) 25%, transparent);
+  border-color: var(--theme-color, #888);
+  border-width: 1.5px;
+  color: var(--text-main, #fff);
+  font-weight: 600;
+}
+
+.voice-chip-check {
+  font-size: 11px;
+}
+
+/* 선택 문항 토글 */
+.voice-optional-block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.voice-optional-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 10px 12px;
+  color: var(--text-muted, #aaa);
+  font-size: 13px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s;
+  width: 100%;
+}
+
+.voice-optional-toggle.checked {
+  border-color: color-mix(in srgb, var(--theme-color, #555) 50%, transparent);
+  background-color: color-mix(in srgb, var(--theme-color, #555) 10%, transparent);
+  color: var(--text-main, #fff);
+}
+
+.voice-toggle-check {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.08);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+.voice-optional-toggle.checked .voice-toggle-check {
+  background-color: var(--theme-color, #555);
+  color: #fff;
+}
+
+.voice-optional-text {
+  flex: 1;
+  line-height: 1.4;
+}
+
+.voice-textarea-indent {
+  margin-left: 8px;
+  width: calc(100% - 8px);
+}

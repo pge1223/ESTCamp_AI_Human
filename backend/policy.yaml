@@ -1,0 +1,4 @@
+name: projects/nodevelture-499003/policies/iam.allowedPolicyMemberDomains
+spec:
+  rules:
+    - allowAll: true

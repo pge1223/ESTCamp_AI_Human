@@ -1,0 +1,636 @@
+/* src/pages/worldview/worldview.css */
+
+/* 상단 작가 정보 미니 배너 */
+.selected-author-banner {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 16px;
+    margin-top: 24px;
+    margin-bottom: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.banner-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 16px;
+    border: 2px solid var(--theme-color);
+}
+
+.banner-genre {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.banner-name {
+    font-size: 1.1rem;
+    margin: 4px 0 0 0;
+    color: var(--text-main);
+}
+
+/* 전체 컨텐츠 */
+.worldview-content {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.worldview-step-indicator {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: var(--text-main);
+}
+
+/* 작가 대화형 레이아웃 */
+.worldview-chat-layout {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+}
+
+.author-side {
+    position: relative;
+    width: 550px;
+    height: 550px;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.author-bg-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    pointer-events: none;
+}
+
+.worldview-author-image {
+    position: absolute;
+    top: 20px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.avatar-wrapper {
+    width: 100%;
+    display: block;
+    border: none;
+    background: transparent;
+    transition: transform 0.15s ease-out;
+    transform-style: preserve-3d;
+    transform-origin: center center;
+}
+
+.breathing {
+    animation: breathing 4s ease-in-out infinite;
+}
+
+@keyframes breathing {
+    0% {
+        transform: translateY(0px) scale(1);
+    }
+
+    50% {
+        transform: translateY(-4px) scale(1.01);
+    }
+
+    100% {
+        transform: translateY(0px) scale(1);
+    }
+}
+
+.input-side {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    min-width: 0;
+}
+
+.author-dialogue-box {
+    height: 100px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border-radius: 14px;
+    padding: 18px;
+    color: var(--text-main);
+    line-height: 1.6;
+    word-break: keep-all;
+    white-space: pre-line;
+}
+
+.step-input-area {
+    width: 100%;
+    min-height: 320px;
+}
+
+.intro-guide-box,
+.summary-box {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    padding: 18px;
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
+.summary-box p {
+    margin: 0 0 10px 0;
+}
+
+.summary-box p:last-child {
+    margin-bottom: 0;
+}
+
+.summary-box strong {
+    display: inline-block;
+    min-width: 74px;
+    color: var(--text-main);
+}
+
+/* 폼 공통 스타일 */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    height: 275px;
+}
+
+.label-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.form-label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+/* 입력 필드 스타일 */
+.form-textarea,
+.form-input {
+    width: 100%;
+    font-size: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    color: var(--text-main);
+    padding: 12px;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+    box-sizing: border-box;
+}
+
+.form-textarea {
+    height: 120px;
+    resize: none;
+    line-height: 1.5;
+}
+
+.form-textarea.height-sm {
+    height: 80px;
+}
+
+.form-textarea.height-xs {
+    height: 65px;
+}
+
+.form-textarea:focus,
+.form-input:focus {
+    border-color: var(--theme-color);
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.form-textarea::placeholder,
+.form-input::placeholder {
+    color: rgba(255, 255, 255, 0.28);
+    font-size: 0.88rem;
+}
+
+.form-input[readonly] {
+    opacity: 0.75;
+    cursor: default;
+}
+
+/* 셀렉트 박스 */
+.form-select {
+    width: 100%;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    color: var(--text-main);
+    padding: 11px;
+    outline: none;
+}
+
+/* 캐릭터 카드 */
+.character-card-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 12px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-bar) var(--scrollbar-bg);
+}
+
+.character-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+    margin: 5px;
+}
+
+.char-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.char-index {
+    font-size: 0.9rem;
+    color: var(--theme-color);
+    font-weight: bold;
+}
+
+.char-sub-label {
+    font-size: 0.85rem;
+    color: var(--text-main);
+    padding: 4px;
+}
+
+.char-sub-hint {
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--text-sub, #888);
+}
+
+/* 버튼 */
+.btn-add,
+.btn-remove {
+    background: #2a2a2a;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+
+.btn-add {
+    padding: 6px 12px;
+    width: auto;
+    height: auto;
+    font-size: 0.85rem;
+    background: var(--theme-color);
+    border: none;
+}
+
+.btn-add:hover {
+    background: var(--theme-color-sub);
+}
+
+.btn-card-remove {
+    background: transparent;
+    border: 1px solid rgba(220, 53, 69, 0.5);
+    color: #dc3545;
+    padding: 4px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: all 0.2s;
+}
+
+.btn-card-remove:hover:not(:disabled) {
+    background: #dc3545;
+    color: #fff;
+}
+
+.btn-card-remove:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    border-color: rgba(255, 255, 255, 0.1);
+    color: #666;
+}
+
+/* 하단 액션 */
+.action-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 4px;
+}
+
+.btn-cancel,
+.btn-save {
+    flex: 1;
+    padding: 14px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: opacity 0.2s;
+}
+
+.btn-cancel {
+    background: #222;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #ccc;
+}
+
+.btn-save {
+    background: var(--theme-color);
+    border: none;
+    color: #fff;
+}
+
+.btn-cancel:hover,
+.btn-save:hover {
+    opacity: 0.9;
+}
+
+.btn-save:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* 레이아웃 유틸 */
+.form-row {
+    display: flex;
+    gap: 16px;
+    width: 100%;
+}
+
+.form-row.align-end {
+    align-items: flex-end;
+}
+
+.flex-1 {
+    flex: 1;
+}
+
+.flex-2 {
+    flex: 2;
+}
+
+.flex-3 {
+    flex: 3;
+}
+
+.flex-5 {
+    flex: 5;
+}
+
+/* 모바일 반응형 */
+@media (orientation: portrait) {
+    .worldview-content {
+        height: 100%;
+    }
+
+    .selected-author-banner {
+        display: none;
+    }
+
+    .worldview-chat-layout {
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    .author-side {
+        width: 100%;
+        height: auto;
+        position: relative;
+        aspect-ratio: 1 / 1;
+        margin-top: 10px;
+    }
+
+    .author-bg-layer,
+    .worldview-author-image {
+        position: absolute;
+        aspect-ratio: 1 / 1;
+    }
+
+    .input-side {
+        width: 100%;
+        height: 100%;
+    }
+
+    .step-input-area {
+        width: 100%;
+        min-height: auto;
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .character-card .form-row.align-end {
+        flex-direction: row;
+        gap: 8px;
+    }
+
+    .character-card .form-group {
+        min-width: 0;
+    }
+
+    .character-card .form-input,
+    .character-card .form-select {
+        padding: 10px 8px;
+    }
+
+    .label-header {
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .action-buttons {
+        margin-top: auto;
+    }
+
+    .author-dialogue-box {
+        padding: 8px;
+    }
+
+    .character-card {
+        padding: 8px;
+    }
+}
+
+/* 세계관 예시 모달 */
+.example-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.example-modal-close {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 16px;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 6px;
+    line-height: 1;
+}
+.example-modal-close:hover { color: var(--text-main); }
+
+.example-modal-overlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.example-modal {
+    width: min(520px, calc(100% - 32px));
+    max-height: 80vh;
+    overflow-y: auto;
+    background: var(--bg-main);
+    border-color: var(--theme-color);
+    border-radius: 16px;
+    padding: 20px;
+    color: var(--text-main);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+}
+
+.example-modal h3 {
+    margin: 0 0 16px 0;
+}
+
+.example-title-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.example-title-button {
+    width: 100%;
+    padding: 14px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid;
+    border-color: var(--theme-color);
+    border-radius: 10px;
+    color: var(--text-main);
+    text-align: left;
+    cursor: pointer;
+}
+
+.example-title-button:hover {
+    background: var(--theme-color);
+}
+
+.example-detail-box {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    white-space: pre-line;
+}
+
+.example-detail-box strong {
+    color: var(--text-main);
+}
+
+.example-character-box {
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.example-modal-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.example-character-prompt {
+    margin-left: 9px;
+}
+/* 호칭 규칙 */
+.address-rule-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.address-rule-select {
+    flex: 2;
+    min-width: 0;
+}
+
+.address-rule-arrow {
+    color: var(--text-sub, #888);
+    flex-shrink: 0;
+}
+
+.address-rule-input {
+    flex: 1;
+    min-width: 0;
+}
+
+.btn-rule-remove {
+    background: none;
+    border: none;
+    color: var(--text-sub, #888);
+    cursor: pointer;
+    font-size: 14px;
+    padding: 2px 6px;
+    flex-shrink: 0;
+}
+
+.btn-rule-remove:hover {
+    color: #e57373;
+}
+
+.btn-add-rule {
+    background: none;
+    border: 1px dashed rgba(255,255,255,0.2);
+    border-radius: 6px;
+    color: var(--text-sub, #888);
+    cursor: pointer;
+    font-size: 12px;
+    padding: 4px 10px;
+    margin-top: 4px;
+    transition: border-color 0.2s, color 0.2s;
+}
+
+.btn-add-rule:hover {
+    border-color: rgba(255,255,255,0.4);
+    color: var(--text-main, #fff);
+}
+

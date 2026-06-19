@@ -1,0 +1,28 @@
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: nodevelture
+      POSTGRES_PASSWORD: nodevelture
+      POSTGRES_DB: nodevelture
+    ports:
+      - "5433:5432"   # 호스트 5433 → 컨테이너 5432 (Windows 네이티브 PostgreSQL의 5432 충돌 회피)
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nodevelture"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+
+volumes:
+  postgres_data:
+  redis_data:

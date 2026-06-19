@@ -1,0 +1,190 @@
+{
+    "1": {
+        "description": "백야 (白夜) - 호러 / 미스터리",
+        "dialogues": [
+            {
+                "step": 1,
+                "field": "intro",
+                "text": "...오셨군요.\n무엇을 쓰고 싶으십니까.",
+                "image": "/assets/author1/author1-3.png"
+            },
+            {
+                "step": 2,
+                "field": "title",
+                "text": "모든 이야기에는 이름이 필요합니다.\n독자의 기억에 오래 남을 제목을 알려주시겠습니까?",
+                "image": "/assets/author1/author1-2.png"
+            },
+            {
+                "step": 3,
+                "field": "description",
+                "text": "이번 이야기에선 어떤 일이 벌어지나요?\n숨겨야 할 비밀은 나중에 남겨두어도 좋습니다.",
+                "image": "/assets/author1/author1-3.png"
+            },
+            {
+                "step": 4,
+                "field": "setting",
+                "text": "비극은 언제, 어디에서 시작됩니까?\n시대와 장소를 알려주세요.",
+                "image": "/assets/author1/author1-4.png"
+            },
+            {
+                "step": 5,
+                "field": "rules",
+                "text": "이 세계에는 어떤 금기나 규칙이 존재하나요?\n절대 어겨서는 안 되는 것이 있다면 알려주세요.",
+                "image": "/assets/author1/author1-5.png"
+            },
+            {
+                "step": 6,
+                "field": "characters",
+                "text": "이제 등장인물을 기록하겠습니다.\n한 명만 있어도 괜찮습니다.\n필요한 만큼 인물 카드를 추가해주세요.",
+                "image": "/assets/author1/author1-6.png"
+            },
+            {
+                "step": 7,
+                "field": "confirm",
+                "text": "충분합니다.\n이제 모든 조각이 모였군요.\n이야기를 시작해봅시다.",
+                "image": "/assets/author1/author1-7.png"
+            }
+        ]
+    },
+    "2": {
+        "description": "차로운 - 본격 추리",
+        "dialogues": [
+            {
+                "step": 1,
+                "field": "intro",
+                "text": "시간 없으니 바로 시작하죠.",
+                "image": "/assets/author2/author2-1.png"
+            },
+            {
+                "step": 2,
+                "field": "title",
+                "text": "사건 기록을 시작하겠습니다.\n작품 제목부터 정하죠.",
+                "image": "/assets/author2/author2-2.png"
+            },
+            {
+                "step": 3,
+                "field": "description",
+                "text": "사건 개요를 설명해주세요.\n핵심 내용만 간결하게.",
+                "image": "/assets/author2/author2-3.png"
+            },
+            {
+                "step": 4,
+                "field": "setting",
+                "text": "사건 발생 장소와 시점을 입력해주세요.",
+                "image": "/assets/author2/author2-4.png"
+            },
+            {
+                "step": 5,
+                "field": "rules",
+                "text": "이 세계만의 특수 규칙이 있다면 알려주세요.\n추리에 영향을 주는 요소는 중요합니다.",
+                "image": "/assets/author2/author2-5.png"
+            },
+            {
+                "step": 6,
+                "field": "characters",
+                "text": "등장인물 정보를 한 번에 정리하겠습니다.\n탐정, 용의자, 피해자, 조력자 등 필요한 인물을 카드에 입력해주세요.",
+                "image": "/assets/author2/author2-6.png"
+            },
+            {
+                "step": 7,
+                "field": "confirm",
+                "text": "인물 정리 완료.\n이제 사건을 재구성해보죠.",
+                "image": "/assets/author2/author2-7.png"
+            }
+        ]
+    },
+    "3": {
+        "description": "한여름 - 로맨스",
+        "dialogues": [
+            {
+                "step": 1,
+                "field": "intro",
+                "text": "어떤 설레는 이야기를 써볼까요?",
+                "image": "/assets/author3/author3-1.png"
+            },
+            {
+                "step": 2,
+                "field": "title",
+                "text": "그럼 우리 이야기의 제목부터 정해볼까요?\n설레는 이름이면 더 좋고요.",
+                "image": "/assets/author3/author3-2.png"
+            },
+            {
+                "step": 3,
+                "field": "description",
+                "text": "어떤 이야기를 꿈꾸고 계신가요?\n두근거리는 내용을 들려주세요.",
+                "image": "/assets/author3/author3-3.png"
+            },
+            {
+                "step": 4,
+                "field": "setting",
+                "text": "주인공들은 어디에서 만나게 될까요?\n시대와 배경을 알려주세요.",
+                "image": "/assets/author3/author3-4.png"
+            },
+            {
+                "step": 5,
+                "field": "rules",
+                "text": "사랑에도 규칙이 있잖아요.\n이 세계만의 특별한 설정이 있다면 알려주세요.",
+                "image": "/assets/author3/author3-5.png"
+            },
+            {
+                "step": 6,
+                "field": "characters",
+                "text": "이제 이야기 속 사람들을 만나볼까요?\n한 명만 있어도 괜찮고, 마음이 얽힐 사람이 더 있다면 인물 카드를 추가해주세요.",
+                "image": "/assets/author3/author3-6.png"
+            },
+            {
+                "step": 7,
+                "field": "confirm",
+                "text": "좋아요. 이제 이 사람들로 두근두근한 이야기를 시작해볼까요?",
+                "image": "/assets/author3/author3-7.png"
+            }
+        ]
+    },
+    "4": {
+        "description": "김도현 - 일상 / 에세이",
+        "dialogues": [
+            {
+                "step": 1,
+                "field": "intro",
+                "text": "오늘 어떤 하루였어요?",
+                "image": "/assets/author4/author4-1.png"
+            },
+            {
+                "step": 2,
+                "field": "title",
+                "text": "글에도 이름이 있어야겠죠.\n어떤 제목을 붙이고 싶나요?",
+                "image": "/assets/author4/author4-2.png"
+            },
+            {
+                "step": 3,
+                "field": "description",
+                "text": "어떤 이야기를 담고 싶으세요?\n편하게 말씀해주세요.",
+                "image": "/assets/author4/author4-3.png"
+            },
+            {
+                "step": 4,
+                "field": "setting",
+                "text": "이야기는 어디에서 시작되나요?\n시간과 장소를 알려주세요.",
+                "image": "/assets/author4/author4-4.png"
+            },
+            {
+                "step": 5,
+                "field": "rules",
+                "text": "특별히 지키고 싶은 설정이나 분위기가 있을까요?",
+                "image": "/assets/author4/author4-5.png"
+            },
+            {
+                "step": 6,
+                "field": "characters",
+                "text": "이야기 속에 함께할 사람들을 정리해볼까요?\n한 명이어도 좋고, 여러 명이어도 괜찮습니다.\n인물 카드에 편하게 적어주세요.",
+                "image": "/assets/author4/author4-6.png"
+            },
+            {
+                "step": 7,
+                "field": "confirm",
+                "text": "좋네요.\n이제 필요한 사람들은 모두 모인 것 같아요.\n천천히 이야기를 써내려가 봅시다.",
+                "image": "/assets/author4/author4-7.png"
+            }
+        ]
+    }
+}

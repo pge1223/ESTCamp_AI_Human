@@ -1,0 +1,78 @@
+{
+  "hash": "495a96d0",
+  "configHash": "97251476",
+  "lockfileHash": "c33f0138",
+  "browserHash": "d33e3979",
+  "optimized": {
+    "@neondatabase/neon-js/auth": {
+      "src": "../../node_modules/@neondatabase/neon-js/dist/auth/index.mjs",
+      "file": "@neondatabase_neon-js_auth.js",
+      "fileHash": "8966d280",
+      "needsInterop": false
+    },
+    "@neondatabase/neon-js/auth/react": {
+      "src": "../../node_modules/@neondatabase/neon-js/dist/auth/react/index.mjs",
+      "file": "@neondatabase_neon-js_auth_react.js",
+      "fileHash": "dfb61961",
+      "needsInterop": false
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "74fe28bd",
+      "needsInterop": true
+    },
+    "react-markdown": {
+      "src": "../../node_modules/react-markdown/index.js",
+      "file": "react-markdown.js",
+      "fileHash": "4ffe002c",
+      "needsInterop": false
+    },
+    "react-router-dom": {
+      "src": "../../node_modules/react-router-dom/dist/index.mjs",
+      "file": "react-router-dom.js",
+      "fileHash": "e85af0a2",
+      "needsInterop": false
+    },
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "ab8a0009",
+      "needsInterop": true
+    },
+    "react/jsx-dev-runtime": {
+      "src": "../../node_modules/react/jsx-dev-runtime.js",
+      "file": "react_jsx-dev-runtime.js",
+      "fileHash": "931b8790",
+      "needsInterop": true
+    },
+    "recharts": {
+      "src": "../../node_modules/recharts/es6/index.js",
+      "file": "recharts.js",
+      "fileHash": "52345400",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "adapter-core-D4V1J06B-Bke6b8c5": {
+      "file": "adapter-core-D4V1J06B-Bke6b8c5.js",
+      "isDynamicEntry": false
+    },
+    "chunk-B-1-B7_t": {
+      "file": "chunk-B-1-B7_t.js",
+      "isDynamicEntry": false
+    },
+    "jsx-runtime-D51v3ApR": {
+      "file": "jsx-runtime-D51v3ApR.js",
+      "isDynamicEntry": false
+    },
+    "react-dom-Br2l1Z8p": {
+      "file": "react-dom-Br2l1Z8p.js",
+      "isDynamicEntry": false
+    },
+    "react-is-BTd0rfaG": {
+      "file": "react-is-BTd0rfaG.js",
+      "isDynamicEntry": false
+    }
+  }
+}

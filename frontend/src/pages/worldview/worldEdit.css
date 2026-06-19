@@ -1,0 +1,307 @@
+/* 세계관 수정 화면 — 작가 테마(data-author) 변수 사용 */
+.worldedit-container {
+  min-height: 100vh;
+  background: var(--bg-main);
+  color: var(--text-main);
+  display: flex;
+  justify-content: center;
+  padding: 32px 16px;
+  box-sizing: border-box;
+}
+
+.worldedit-wrapper {
+  width: 100%;
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.worldedit-loading {
+  margin-top: 80px;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.worldedit-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.worldedit-back {
+  background: none;
+  border: none;
+  color: var(--text-main);
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1;
+  padding: 0 4px;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+.worldedit-back:hover { color: var(--theme-color); }
+
+.worldedit-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.worldedit-hint {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+.worldedit-hint strong { color: var(--theme-color); }
+
+.worldedit-section {
+  background: var(--card-main);
+  border: 1px solid color-mix(in srgb, var(--text-main) 8%, transparent);
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* worldview.css의 .form-group{height:275px}는 '생성 페이지'용 — 수정 화면에선 한 줄
+   입력에도 275px가 잡혀 과한 세로 공백이 생긴다. 이 페이지만 내용 높이로 되돌린다. */
+.worldedit-container .form-group {
+  height: auto;
+}
+
+.worldedit-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.worldedit-section-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.worldedit-char-note {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--text-muted);
+}
+.worldedit-char-note strong { color: var(--text-main); }
+
+.worldedit-hard-tag {
+  font-size: 10px;
+  font-weight: 600;
+  color: #C77800;
+  background: rgba(255, 167, 38, 0.18);
+  padding: 1px 7px;
+  border-radius: 10px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+.worldedit-new-badge {
+  color: var(--theme-color);
+  font-weight: 600;
+}
+
+.worldedit-warning {
+  background: rgba(255, 167, 38, 0.12);
+  border: 1px solid rgba(255, 167, 38, 0.4);
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--text-main);
+}
+.worldedit-warning strong { color: #C77800; }
+
+.worldedit-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.worldedit-actions__library {
+  display: flex;
+  gap: 8px;
+}
+
+.worldedit-actions__right {
+  display: flex;
+  gap: 10px;
+}
+
+.worldedit-lib-btn {
+  font-size: 13px;
+  font-weight: 600;
+  padding: 9px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 1px solid color-mix(in srgb, var(--theme-color) 40%, transparent);
+  background: color-mix(in srgb, var(--theme-color) 10%, transparent);
+  color: var(--theme-color);
+  transition: background 0.15s;
+}
+.worldedit-lib-btn:hover { background: color-mix(in srgb, var(--theme-color) 20%, transparent); }
+.worldedit-lib-btn:disabled { opacity: 0.5; cursor: default; }
+
+/* 내서재 불러오기 모달 */
+.we-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.we-modal {
+  width: 100%;
+  max-width: 480px;
+  max-height: 70vh;
+  background: var(--card-main, #fff);
+  color: var(--text-main, #222);
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 12px 44px rgba(0,0,0,0.28);
+  overflow: hidden;
+}
+
+.we-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 20px 14px;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  flex-shrink: 0;
+}
+
+.we-modal__title {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.we-modal__close {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: var(--text-muted);
+  padding: 4px 8px;
+}
+
+.we-modal__empty {
+  padding: 32px 20px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.we-modal__list {
+  overflow-y: auto;
+  flex: 1;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.we-modal__item {
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid color-mix(in srgb, var(--theme-color) 20%, transparent);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.we-modal__item:hover { background: color-mix(in srgb, var(--theme-color) 8%, transparent); }
+
+.we-modal__item-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.we-modal__item-title {
+  font-weight: 700;
+  font-size: 14px;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.we-modal__item-badge {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 99px;
+  background: color-mix(in srgb, var(--theme-color) 15%, transparent);
+  color: var(--theme-color);
+  flex-shrink: 0;
+}
+
+.we-modal__item-del {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 12px;
+  cursor: pointer;
+  padding: 2px 6px;
+  flex-shrink: 0;
+  border-radius: 6px;
+}
+.we-modal__item-del:hover { background: rgba(255,0,0,0.1); color: #e53935; }
+
+.we-modal__item-desc {
+  margin: 4px 0 6px;
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.we-modal__item-meta {
+  display: flex;
+  gap: 10px;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.worldedit-cancel,
+.worldedit-save {
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 24px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s, opacity 0.2s;
+}
+
+.worldedit-cancel {
+  background: none;
+  border: 1px solid color-mix(in srgb, var(--text-main) 20%, transparent);
+  color: var(--text-muted);
+}
+.worldedit-cancel:hover { color: var(--text-main); border-color: var(--theme-color); }
+
+.worldedit-save {
+  background: var(--theme-color);
+  border: 1px solid var(--theme-color);
+  color: #fff;
+}
+.worldedit-save:hover { opacity: 0.9; }
+.worldedit-save:disabled,
+.worldedit-cancel:disabled { opacity: 0.5; cursor: default; }

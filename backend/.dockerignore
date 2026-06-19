@@ -1,0 +1,18 @@
+# 비밀/로컬 전용 — 이미지에 절대 포함 금지
+.env
+.env.*
+*.key
+*.json.key
+
+# 파이썬 캐시/가상환경
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+
+# 로컬 산출물
+f_qc_02_spell_checker/test_results.txt
+*.log
